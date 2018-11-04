@@ -7,6 +7,9 @@ public class CharacterController : MonoBehaviour {
 	public float speed = 10.0F;
 	bool onGround = true;
     public float jumpForce = 250f;
+
+    public GameObject player;
+    private Vector3 forwardDirection;
 	
 	void Start () {
 		
@@ -16,14 +19,18 @@ public class CharacterController : MonoBehaviour {
 	
 
 	void Update () {
-		
-		float translation = Input.GetAxis("Vertical") * speed;
+
+        float translation = Input.GetAxis("Vertical") * speed;
 		float straffe = Input.GetAxis("Horizontal") * speed;
 		translation *= Time.deltaTime;
 		straffe *= Time.deltaTime;
 		
 		transform.Translate (straffe, 0, translation);
 		
+
+        forwardDirection = player.transform.forward;
+        transform.position += forwardDirection * Time.deltaTime * speed;
+
 		if (Input.GetKeyDown("escape")) {
 			Cursor.lockState = CursorLockMode.None;
 		}
@@ -32,7 +39,7 @@ public class CharacterController : MonoBehaviour {
 		RaycastHit hit;
 		Vector3 physicsCentre = this.transform.position + this.GetComponent<CapsuleCollider>().center;
 		
-		Debug.DrawRay(physicsCentre, Vector3.down, Color.red, 1);
+		//Debug.DrawRay(physicsCentre, Vector3.down, Color.red, 1);
 		if (Physics.Raycast(physicsCentre, Vector3.down, out hit, 1.1f)) {
 			if(hit.transform.gameObject.tag != "Player") {
 				onGround = true;
