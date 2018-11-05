@@ -5,7 +5,7 @@ using UnityEngine;
 public class TerrainHugging : MonoBehaviour {
 
     public GameObject player;
-    public Camera cam;
+    public Transform cameraRotation;
     public Transform raycastPoint;
 
     public float mouseSensitivity;
@@ -41,7 +41,34 @@ public class TerrainHugging : MonoBehaviour {
 
         rotationAmountY = Input.GetAxis("Mouse Y") * mouseSensitivity;
         rotationAmountY *= Time.deltaTime;
+
+
+
+
+        float rotateCameraX = -rotationAmountY;
+
+        Vector3 currentRotation = cameraRotation.localEulerAngles;
+        currentRotation.z += rotateCameraX;
+        float currentZrotation = currentRotation.z;
+        Debug.Log(currentZrotation);
+        if (currentZrotation < 5)
+        {
+            currentZrotation = 5;
+        }
+
+        if (currentZrotation > 175)
+        {
+            currentZrotation = 175;
+        }
+        currentRotation.z = currentZrotation;
+        Quaternion newRotation = Quaternion.Euler(currentRotation);
+        cameraRotation.transform.localRotation = newRotation;
         
+        //Debug.Log(newRotation.eulerAngles);
+
+        
+
+        /*
         xAxisClamp -= rotationAmountY;
         Vector3 targetRotCam = cam.transform.rotation.eulerAngles;
         targetRotCam.x -= rotationAmountY;
@@ -83,9 +110,11 @@ public class TerrainHugging : MonoBehaviour {
 
         transform.rotation = Quaternion.Euler(targetRotCam);
         player.transform.rotation = Quaternion.Euler(targetRotBody);*/
+
+
         //move player
-        forwardDirection = player.transform.forward;
-        transform.position += forwardDirection * Time.deltaTime * speed;
+       forwardDirection = player.transform.forward;
+       transform.position += forwardDirection * Time.deltaTime * speed;
     }
 }
 
