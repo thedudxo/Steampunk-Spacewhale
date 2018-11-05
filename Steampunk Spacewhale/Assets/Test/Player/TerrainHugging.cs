@@ -7,6 +7,7 @@ public class TerrainHugging : MonoBehaviour {
     public GameObject player;
     public Transform cameraRotation;
     public Transform raycastPoint;
+    public Rigidbody rb;
 
     public float mouseSensitivity;
     float xAxisClamp = 0;
@@ -15,14 +16,22 @@ public class TerrainHugging : MonoBehaviour {
     private float rotationAmountY;
 
     private float hoverheight = 1.0f;
-    private float speed = 10.0f;
+    private float speed = 500f;
+    private float gravity = -10f;
 
     private float terrainHeight;
     private RaycastHit hit;
     private Vector3 pos;
     private Vector3 forwardDirection;
+    private Vector3 rightDirection;
+
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
     private void Update() {
+
 
         //Keeps player above ground
         pos = transform.position;
@@ -32,7 +41,6 @@ public class TerrainHugging : MonoBehaviour {
         //Aligns player with terrain
         Physics.Raycast(raycastPoint.position, Vector3.down, out hit);
         transform.up -= (transform.up - hit.normal) * 0.1f;
-
         //rotate camera with input
 
         rotationAmountX = Input.GetAxis("Mouse X") * mouseSensitivity;
@@ -50,7 +58,7 @@ public class TerrainHugging : MonoBehaviour {
         Vector3 currentRotation = cameraRotation.localEulerAngles;
         currentRotation.z += rotateCameraX;
         float currentZrotation = currentRotation.z;
-        Debug.Log(currentZrotation);
+        //Debug.Log(currentZrotation);
         if (currentZrotation < 5)
         {
             currentZrotation = 5;
@@ -63,58 +71,14 @@ public class TerrainHugging : MonoBehaviour {
         currentRotation.z = currentZrotation;
         Quaternion newRotation = Quaternion.Euler(currentRotation);
         cameraRotation.transform.localRotation = newRotation;
-        
-        //Debug.Log(newRotation.eulerAngles);
-
-        
-
-        /*
-        xAxisClamp -= rotationAmountY;
-        Vector3 targetRotCam = cam.transform.rotation.eulerAngles;
-        targetRotCam.x -= rotationAmountY;
-        if (xAxisClamp > 90) {
-            xAxisClamp = 90;
-            targetRotCam.x = 90;
-        }
-        else if (xAxisClamp < -90) {
-            xAxisClamp = -90;
-            targetRotCam.x = 270;
-        }
-        cam.transform.Rotate(-rotationAmountY, 0.0f, 0.0f);
-
-        /*float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-
-        float rotAmountX = mouseX * mouseSensitivity;
-        float rotAmountY = mouseY * mouseSensitivity;
-
-        xAxisClamp -= rotAmountY;
-        
-        Vector3 targetRotCam = cam.transform.rotation.eulerAngles;
-        Vector3 targetRotBody = player.transform.rotation.eulerAngles;
-
-        targetRotCam.x -= rotAmountY;
-        targetRotCam.z = 0;
-        targetRotBody.y += rotAmountX;
-
-        if (xAxisClamp > 90)
-        {
-            xAxisClamp = 90;
-            targetRotCam.x = 90;
-        }
-        else if (xAxisClamp < -90)
-        {
-            xAxisClamp = -90;
-            targetRotCam.x = 270;
-        }
-
-        transform.rotation = Quaternion.Euler(targetRotCam);
-        player.transform.rotation = Quaternion.Euler(targetRotBody);*/
-
 
         //move player
-       forwardDirection = player.transform.forward;
-       transform.position += forwardDirection * Time.deltaTime * speed;
+        float translation = Input.GetAxis("Vertical") * speed;
+        float straffe = Input.GetAxis("Horizontal") * speed;
+
+        translation *= Time.deltaTime;
+        straffe *= Time.deltaTime;
+
+        rb.AddForce(transform.forward * translation, ForceMode.Force);
     }
 }
-
