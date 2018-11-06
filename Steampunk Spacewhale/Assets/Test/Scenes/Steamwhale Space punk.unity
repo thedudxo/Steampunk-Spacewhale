@@ -382,7 +382,6 @@ GameObject:
   - component: {fileID: 363066156}
   - component: {fileID: 363066155}
   - component: {fileID: 363066159}
-  - component: {fileID: 363066154}
   - component: {fileID: 363066160}
   - component: {fileID: 363066161}
   m_Layer: 0
@@ -565,6 +564,7 @@ MonoBehaviour:
   raycastPoint: {fileID: 363066158}
   rb: {fileID: 363066159}
   mouseSensitivity: 200
+  speed: 10
 --- !u!4 &698249382
 Transform:
   m_ObjectHideFlags: 0
@@ -572,7 +572,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 698249380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 310.3, y: 69.09, z: 68.44}
+  m_LocalPosition: {x: 329.07, y: 69.09, z: 68.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 363066158}
