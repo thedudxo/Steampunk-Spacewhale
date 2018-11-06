@@ -16,8 +16,7 @@ public class TerrainHugging : MonoBehaviour {
     private float rotationAmountY;
 
     private float hoverheight = 1.0f;
-    private float speed = 500f;
-    private float gravity = -10f;
+    private float speed = 100.0f;
 
     private float terrainHeight;
     private RaycastHit hit;
@@ -25,22 +24,53 @@ public class TerrainHugging : MonoBehaviour {
     private Vector3 forwardDirection;
     private Vector3 rightDirection;
 
-    private void Awake()
+    private bool hugging = true;
+
+    private Vector3[] directions;
+
+    private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        directions = new Vector3[6]
+        {
+            transform.up,
+            -transform.up,
+            transform.forward,
+            -transform.forward,
+            transform.right,
+            -transform.right
+        };
+    }
+
+    public void PlayerCollided(Collision collision)
+    {
+        Debug.Log("collision");
+
+        //Aligns player with terrain
+        if (hugging)
+        {
+            for (int i = 0; i < directions.Length; i++)
+            {
+                Physics.Raycast(raycastPoint.position, directions[i], out hit);
+                Debug.DrawRay(raycastPoint.position, directions[i], Color.red);
+                transform.up -= (transform.up - hit.normal) * 0.1f;
+            }
+        }
     }
 
     private void Update() {
 
+        if (Input.GetKey(KeyCode.Space))
+        {
+            hugging = !hugging;
+        }
 
         //Keeps player above ground
         pos = transform.position;
-        float terrainHeight = Terrain.activeTerrain.SampleHeight(pos);
-        transform.position = new Vector3(pos.x, terrainHeight + hoverheight, pos.z);
+        //float terrainHeight = Terrain.activeTerrain.SampleHeight(pos);
+        //transform.position = new Vector3(pos.x, terrainHeight + hoverheight, pos.z);
 
-        //Aligns player with terrain
-        Physics.Raycast(raycastPoint.position, Vector3.down, out hit);
-        transform.up -= (transform.up - hit.normal) * 0.1f;
+        
+
         //rotate camera with input
 
         rotationAmountX = Input.GetAxis("Mouse X") * mouseSensitivity;
@@ -52,33 +82,29 @@ public class TerrainHugging : MonoBehaviour {
 
 
 
+        //Clamps the Camera (possibly in the wrong script)
 
         float rotateCameraX = -rotationAmountY;
-
         Vector3 currentRotation = cameraRotation.localEulerAngles;
         currentRotation.z += rotateCameraX;
         float currentZrotation = currentRotation.z;
-        //Debug.Log(currentZrotation);
+
         if (currentZrotation < 5)
-        {
-            currentZrotation = 5;
-        }
+            { currentZrotation = 5; }
 
         if (currentZrotation > 175)
-        {
-            currentZrotation = 175;
-        }
+            { currentZrotation = 175; }
+
         currentRotation.z = currentZrotation;
         Quaternion newRotation = Quaternion.Euler(currentRotation);
         cameraRotation.transform.localRotation = newRotation;
+        
 
         //move player
-        float translation = Input.GetAxis("Vertical") * speed;
-        float straffe = Input.GetAxis("Horizontal") * speed;
+        forwardDirection = player.transform.forward;
+        //transform.position += forwardDirection * Time.deltaTime * speed;
+        rb.AddForce(forwardDirection * Time.deltaTime * speed);
 
-        translation *= Time.deltaTime;
-        straffe *= Time.deltaTime;
-
-        rb.AddForce(transform.forward * translation, ForceMode.Force);
+        transform.position -= transform.up * 0.05f;
     }
 }
