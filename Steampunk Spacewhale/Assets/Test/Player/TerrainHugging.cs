@@ -16,12 +16,13 @@ public class TerrainHugging : MonoBehaviour {
     private float rotationAmountY;
 
     private float hoverheight = 1.0f;
-    private float speed = 100.0f;
+    public float speed;
 
     private float terrainHeight;
     private RaycastHit hit;
     private Vector3 pos;
     private Vector3 forwardDirection;
+    private Vector3 rightDirection;
 
     private bool hugging = true;
 
@@ -29,14 +30,13 @@ public class TerrainHugging : MonoBehaviour {
 
     private void Start()
     {
-        directions = new Vector3[6]
+        directions = new Vector3[5]
         {
-            transform.up,
-            -transform.up,
-            transform.forward,
-            -transform.forward,
-            transform.right,
-            -transform.right
+            Vector3.up,
+            Vector3.forward,
+            Vector3.back,
+            Vector3.right,
+            Vector3.left
         };
     }
 
@@ -45,15 +45,7 @@ public class TerrainHugging : MonoBehaviour {
         Debug.Log("collision");
 
         //Aligns player with terrain
-        if (hugging)
-        {
-            for (int i = 0; i < directions.Length; i++)
-            {
-                Physics.Raycast(raycastPoint.position, directions[i], out hit);
-                Debug.DrawRay(raycastPoint.position, directions[i], Color.red);
-                transform.up -= (transform.up - hit.normal) * 0.1f;
-            }
-        }
+        
     }
 
     private void Update() {
@@ -68,7 +60,22 @@ public class TerrainHugging : MonoBehaviour {
         //float terrainHeight = Terrain.activeTerrain.SampleHeight(pos);
         //transform.position = new Vector3(pos.x, terrainHeight + hoverheight, pos.z);
 
-        
+        if (hugging)
+        {
+            for (int i = 0; i < directions.Length; i++)
+            {
+                //Physics.Raycast(raycastPoint.position, directions[i], out hit);
+               // Debug.DrawRay(raycastPoint.position, directions[i], Color.red);
+               // transform.up -= (transform.up - hit.normal) * 0.1f;
+            }
+        }
+
+        Vector3 fwd = transform.TransformDirection(Vector3.forward);
+
+        if (Physics.Raycast(player.transform.position, fwd, 10))
+        {
+            Debug.Log("There is something in front of the object!");
+        }
 
         //rotate camera with input
 
@@ -101,10 +108,6 @@ public class TerrainHugging : MonoBehaviour {
 
         //move player
         forwardDirection = player.transform.forward;
-        //transform.position += forwardDirection * Time.deltaTime * speed;
-        rb.AddForce(forwardDirection * Time.deltaTime * speed);
-
-        transform.position -= transform.up * 0.05f;
+        transform.position += forwardDirection * Time.deltaTime * speed;
     }
 }
-

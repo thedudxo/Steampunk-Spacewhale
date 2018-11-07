@@ -125,7 +125,6 @@ GameObject:
   - component: {fileID: 112398212}
   - component: {fileID: 112398210}
   - component: {fileID: 112398208}
-  - component: {fileID: 112398209}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -141,19 +140,6 @@ AudioListener:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 112398207}
   m_Enabled: 1
---- !u!114 &112398209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 112398207}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d2a4cf6bf8c0d948b3b7f26ef294b7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseSensitivity: 2
-  playerBody: {fileID: 363066158}
 --- !u!124 &112398210
 Behaviour:
   m_ObjectHideFlags: 0
@@ -396,7 +382,6 @@ GameObject:
   - component: {fileID: 363066156}
   - component: {fileID: 363066155}
   - component: {fileID: 363066159}
-  - component: {fileID: 363066154}
   - component: {fileID: 363066160}
   - component: {fileID: 363066161}
   m_Layer: 0
@@ -406,20 +391,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &363066154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 363066153}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b78b9c7dc23ce384fb7d5cb7f8d8110d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  jumpForce: 250
-  player: {fileID: 363066153}
 --- !u!136 &363066155
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -427,7 +398,7 @@ CapsuleCollider:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 363066153}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7bb1e46a991a77247ba2c2d701dee5fa, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -485,14 +456,14 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 363066153}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1887752267}
   m_Father: {fileID: 698249382}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &363066159
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -593,6 +564,7 @@ MonoBehaviour:
   raycastPoint: {fileID: 363066158}
   rb: {fileID: 363066159}
   mouseSensitivity: 200
+  speed: 10
 --- !u!4 &698249382
 Transform:
   m_ObjectHideFlags: 0
@@ -600,7 +572,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 698249380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 310.3, y: 69.09, z: 68.44}
+  m_LocalPosition: {x: 329.07, y: 69.09, z: 68.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 363066158}
@@ -630,7 +602,7 @@ TerrainCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 782406479}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7bb1e46a991a77247ba2c2d701dee5fa, type: 2}
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: 17bc3c9f8dd6d2b4e82b6cb7d9928d84, type: 2}
   m_EnableTreeColliders: 1
