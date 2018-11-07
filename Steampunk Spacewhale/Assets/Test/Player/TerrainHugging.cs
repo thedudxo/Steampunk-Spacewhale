@@ -6,43 +6,36 @@ public class TerrainHugging : MonoBehaviour {
 
     public GameObject player;
     public Transform cameraRotation;
-    public Transform raycastPoint;
     public Rigidbody rb;
 
     public float mouseSensitivity;
-    float xAxisClamp = 0;
 
     private float rotationAmountX;
     private float rotationAmountY;
 
-    private float hoverheight = 1.0f;
     public float speed;
 
-    private float terrainHeight;
     private RaycastHit hit;
     private Vector3 pos;
     private Vector3 forwardDirection;
     private Vector3 rightDirection;
 
     private bool hugging = true;
+    private Vector3 raycastPoint;
+    private GameObject previousHug;
+    private GameObject currentHug;
+    private float hugTimer;
+    private float maxHugTime = 0.1f;
 
     private Vector3[] directions;
 
     private void Start()
     {
-        directions = new Vector3[5]
-        {
-            Vector3.up,
-            Vector3.forward,
-            Vector3.back,
-            Vector3.right,
-            Vector3.left
-        };
     }
 
     public void PlayerCollided(Collision collision)
     {
-        Debug.Log("collision");
+        //Debug.Log("collision");
 
         //Aligns player with terrain
         
@@ -50,24 +43,57 @@ public class TerrainHugging : MonoBehaviour {
 
     private void Update() {
 
-        if (Input.GetKey(KeyCode.Space))
+        directions = new Vector3[6]
         {
-            hugging = !hugging;
-        }
+            Vector3.up,
+            -transform.up,
+            Vector3.forward,
+            Vector3.back,
+            Vector3.right,
+            Vector3.left
+        };
 
-        //Keeps player above ground
-        pos = transform.position;
-        //float terrainHeight = Terrain.activeTerrain.SampleHeight(pos);
-        //transform.position = new Vector3(pos.x, terrainHeight + hoverheight, pos.z);
-
+        if (Input.GetKey(KeyCode.Space)) { hugging = !hugging; } //debug toggle
         if (hugging)
         {
-            for (int i = 0; i < directions.Length; i++)
+            //Fire the ray
+            raycastPoint = player.transform.position;
+            Physics.Raycast(raycastPoint, directions[1], out hit);
+            Debug.DrawRay(raycastPoint, directions[1]*5, Color.red, 10f);
+
+            //Do we hug?
+            if (hit.collider != null)
+            {
+                bool doHug = false;
+                GameObject collison = hit.collider.gameObject;
+
+                if (collison != previousHug)
+                { doHug = true;  }
+                else if (hugTimer > maxHugTime)
+                { doHug = true; }
+
+                if (doHug)
+                {
+                    transform.up -= (transform.up - hit.normal) * 0.1f;
+                    if (currentHug != collison)
+                    {
+                        previousHug = currentHug;
+                        currentHug = collison;
+                    }
+                    hugTimer = 0;
+                }
+            }
+            
+            
+
+            for (int i = 0; i < directions.Length; i++) 
             {
                 //Physics.Raycast(raycastPoint.position, directions[i], out hit);
                // Debug.DrawRay(raycastPoint.position, directions[i], Color.red);
                // transform.up -= (transform.up - hit.normal) * 0.1f;
             }
+
+            hugTimer += Time.deltaTime;
         }
 
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
