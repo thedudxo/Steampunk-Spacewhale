@@ -25,11 +25,7 @@ public class CharacterController : MonoBehaviour {
 		translation *= Time.deltaTime;
 		straffe *= Time.deltaTime;
 		
-		transform.Translate (straffe, 0, translation);
-		
-
-        forwardDirection = player.transform.forward;
-        transform.position += forwardDirection * Time.deltaTime * speed;
+		transform.Translate (-translation, 0, straffe);
 
 		if (Input.GetKeyDown("escape")) {
 			Cursor.lockState = CursorLockMode.None;
@@ -37,7 +33,7 @@ public class CharacterController : MonoBehaviour {
 		
 		//jump
 		RaycastHit hit;
-		Vector3 physicsCentre = this.transform.position + this.GetComponent<CapsuleCollider>().center;
+		Vector3 physicsCentre = this.transform.position + player.GetComponent<CapsuleCollider>().center;
 		
 		//Debug.DrawRay(physicsCentre, Vector3.down, Color.red, 1);
 		if (Physics.Raycast(physicsCentre, Vector3.down, out hit, 1.1f)) {
