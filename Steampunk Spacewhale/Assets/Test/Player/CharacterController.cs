@@ -9,6 +9,8 @@ public class CharacterController : MonoBehaviour {
     public float jumpForce = 250f;
 
     public GameObject player;
+
+    private Vector3 raycastGravity;
     private Vector3 forwardDirection;
 	
 	void Start () {
@@ -20,12 +22,13 @@ public class CharacterController : MonoBehaviour {
 
 	void Update () {
 
+        //movement
         float translation = Input.GetAxis("Vertical") * speed;
 		float straffe = Input.GetAxis("Horizontal") * speed;
 		translation *= Time.deltaTime;
 		straffe *= Time.deltaTime;
 		
-		transform.Translate (-translation, 0, straffe);
+		transform.Translate (straffe, 0, translation);
 
 		if (Input.GetKeyDown("escape")) {
 			Cursor.lockState = CursorLockMode.None;
@@ -50,12 +53,24 @@ public class CharacterController : MonoBehaviour {
 		if (Input.GetKeyDown("space") && onGround) {
 			this.GetComponent<Rigidbody>().AddForce(Vector3.up*jumpForce);
 		}
-	
+
+        //Gravity Switch
+        raycastGravity = player.transform.position;
+        Physics.Raycast(raycastGravity, transform.forward, 2);
+        Debug.DrawRay(raycastGravity, transform.forward * 2, Color.red);
+        transform.up -= (transform.up - hit.normal) * 0.1f;
+
+
 	}
 
     void OnCollisionEnter(Collision collision) {
         if (!onGround) {
             speed = 0f;
         }
+    }
+
+    void Rotate()
+    {
+        //transform.up -= (transform.up - hit.normal);
     }
 }
