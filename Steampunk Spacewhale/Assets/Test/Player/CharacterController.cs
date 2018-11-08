@@ -55,12 +55,14 @@ public class CharacterController : MonoBehaviour {
 		}
 
         //Gravity Switch
+        RaycastHit rch;
         raycastGravity = player.transform.position;
-        Physics.Raycast(raycastGravity, transform.forward, 2);
-        Debug.DrawRay(raycastGravity, transform.forward * 2, Color.red);
-        transform.up -= (transform.up - hit.normal) * 0.1f;
-
-
+        
+        if(Physics.Raycast(raycastGravity, transform.forward, out rch, 2))
+        {
+            Rotate(rch);
+        }
+        Debug.DrawRay(raycastGravity, transform.forward * 2, Color.red, 1);
 	}
 
     void OnCollisionEnter(Collision collision) {
@@ -69,8 +71,8 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
-    void Rotate()
-    {
-        //transform.up -= (transform.up - hit.normal);
+    void Rotate(RaycastHit rch){
+        Debug.Log("hit");
+        transform.up -= (transform.up - rch.normal) * 0.1f;
     }
 }
