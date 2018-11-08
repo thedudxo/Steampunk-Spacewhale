@@ -1,0 +1,78 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CharacterController : MonoBehaviour {
+
+	public float speed = 10.0F;
+	bool onGround = true;
+    public float jumpForce = 250f;
+
+    public GameObject player;
+
+    private Vector3 raycastGravity;
+    private Vector3 forwardDirection;
+	
+	void Start () {
+		
+		Cursor.lockState = CursorLockMode.Locked;
+	
+	}
+	
+
+	void Update () {
+
+        //movement
+        float translation = Input.GetAxis("Vertical") * speed;
+		float straffe = Input.GetAxis("Horizontal") * speed;
+		translation *= Time.deltaTime;
+		straffe *= Time.deltaTime;
+		
+		transform.Translate (straffe, 0, translation);
+
+		if (Input.GetKeyDown("escape")) {
+			Cursor.lockState = CursorLockMode.None;
+		}
+		
+		//jump
+		RaycastHit hit;
+		Vector3 physicsCentre = this.transform.position + player.GetComponent<CapsuleCollider>().center;
+		
+		//Debug.DrawRay(physicsCentre, Vector3.down, Color.red, 1);
+		if (Physics.Raycast(physicsCentre, Vector3.down, out hit, 1.1f)) {
+			if(hit.transform.gameObject.tag != "Player") {
+				onGround = true;
+                speed = 10f;
+			}
+		} else {
+			onGround = false;
+		}
+		Debug.Log(onGround);
+		
+		
+		if (Input.GetKeyDown("space") && onGround) {
+			this.GetComponent<Rigidbody>().AddForce(Vector3.up*jumpForce);
+		}
+
+        //Gravity Switch
+        RaycastHit rch;
+        raycastGravity = player.transform.position;
+        
+        if(Physics.Raycast(raycastGravity, transform.forward, out rch, 2))
+        {
+            Rotate(rch);
+        }
+        Debug.DrawRay(raycastGravity, transform.forward * 2, Color.red, 1);
+	}
+
+    void OnCollisionEnter(Collision collision) {
+        if (!onGround) {
+            speed = 0f;
+        }
+    }
+
+    void Rotate(RaycastHit rch){
+        Debug.Log("hit");
+        transform.up -= (transform.up - rch.normal) * 0.1f;
+    }
+}
