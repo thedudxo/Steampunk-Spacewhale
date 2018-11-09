@@ -57,12 +57,29 @@ public class NewSwitch : MonoBehaviour {
 
         // movement code - Rotate with mouse Input:
         transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
+        float xRotation = Input.GetAxis("Mouse Y") * turnSpeed * Time.deltaTime;
+        float xAxisClamp = 0;
+        xAxisClamp -= xRotation;
+        Vector3 rotCam = cam.transform.localEulerAngles;
+        rotCam.x -= xRotation;
+        if (xAxisClamp > 85)
+        {
+            xAxisClamp = 85;
+            rotCam.x = 85;
+        } else if (xAxisClamp < -85)
+        {
+            xAxisClamp = -85;
+            rotCam.x = 265;
+        }
+        
+        cam.transform.rotation = Quaternion.Euler(rotCam);
         // update surface normal and isGrounded:
         ray = new Ray(transform.position, -myNormal); // cast ray downwards
         if (Physics.Raycast(ray, out hit))
         { // use it to update myNormal and isGrounded
             isGrounded = hit.distance <= distGround + deltaGround;
             surfaceNormal = hit.normal;
+            isGrounded = true;
         }
         else
         {
@@ -86,7 +103,7 @@ public class NewSwitch : MonoBehaviour {
         rb.isKinematic = true; // disable physics while jumping
         var orgPos = transform.position;
         var orgRot = transform.rotation;
-        var dstPos = point + normal * (distGround + 0.5f); // will jump to 0.5 above wall
+        var dstPos = point + normal * (distGround + 1f); // will jump to 0.5 above wall
         var myForward = Vector3.Cross(transform.right, normal);
         var dstRot = Quaternion.LookRotation(myForward, normal);
         for (float t = 0.0f; t < 1.0; ){
