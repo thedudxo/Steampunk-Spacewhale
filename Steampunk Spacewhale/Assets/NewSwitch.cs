@@ -6,17 +6,26 @@ public class NewSwitch : MonoBehaviour {
 
     public GameObject cam;
     public GameObject player;
-    public float moveSpeed = 6;
+    //movement
+    public float moveSpeed;
+    public float walkSpeed = 6;
+    public float runSpeed = 15;
+    public float slideSpeed = 15;
+    public float crouchSpeed = 3;
+    public float runTimer = 0;
+    public float runMax = 5;
+
     public float turnSpeed = 90; // turning speed (degrees/second)
     public float lerpSpeed = 10; // smoothing speed
     public float gravity = 10;// gravity acceleration
     public bool isGrounded;
     public float deltaGround = 0.2f; // character is grounded up to this distance
-    public float jumpSpeed = 10; // vertical jump initial speed
-    public float jumpRange = 1; // range to detect target wall
+    public float jumpSpeed = 5; // vertical jump initial speed
+    public float jumpRange = 3; // range to detect target wall
     private Rigidbody rb;
     private Vector3 surfaceNormal; // current surface normal
     private Vector3 myNormal; // character normal
+    private bool running = false;
     private float distGround; // distance from character position to ground
     private bool jumping = false; // flag &quot;I'm jumping to wall&quot;
     private float vertSpeed = 0; // vertical jump current speed 
@@ -33,10 +42,7 @@ public class NewSwitch : MonoBehaviour {
         // apply constant weight force according to character normal:
         rb = GetComponent<Rigidbody>();
         rb.AddForce(-gravity * rb.mass * myNormal);
-    }
 
-    void Update()
-    {
         // jump code - jump to wall or simple jump
         if (jumping) { return; } // abort Update while jumping to a wall
         Ray ray;
@@ -53,7 +59,6 @@ public class NewSwitch : MonoBehaviour {
                 rb.velocity += jumpSpeed * myNormal;
             }
         }
-        Debug.DrawRay(transform.position, transform.forward * jumpRange);
 
         // movement code - Rotate with mouse Input:
         transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
@@ -63,6 +68,7 @@ public class NewSwitch : MonoBehaviour {
         { // use it to update myNormal and isGrounded
             isGrounded = hit.distance <= distGround + deltaGround;
             surfaceNormal = hit.normal;
+            isGrounded = true;
         }
         else
         {
@@ -70,6 +76,28 @@ public class NewSwitch : MonoBehaviour {
             // assume usual ground normal to avoid "falling forever"
             surfaceNormal = Vector3.up;
         }
+        Debug.DrawRay(transform.position, transform.forward * jumpRange);
+    }
+
+    void Update()
+    {
+        //run script
+        if(Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift) && !running) {
+            running = true;
+            runTimer = 0.0f;
+        }
+
+        if (running)
+        {
+            moveSpeed = runSpeed;
+            runTimer += Time.deltaTime;
+            if (runTimer > runMax)
+            {
+                running = false;
+                moveSpeed = walkSpeed;
+            }
+        } 
+
         myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed * Time.deltaTime);
         // find forward direction with new myNormal:
         var myForward = Vector3.Cross(transform.right, myNormal);
@@ -78,6 +106,7 @@ public class NewSwitch : MonoBehaviour {
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
         // move the character forth/back with Vertical axis:
         transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
+
     }
 
     IEnumerator JumpToWall(Vector3 point, Vector3 normal) {
@@ -86,7 +115,7 @@ public class NewSwitch : MonoBehaviour {
         rb.isKinematic = true; // disable physics while jumping
         var orgPos = transform.position;
         var orgRot = transform.rotation;
-        var dstPos = point + normal * (distGround + 0.5f); // will jump to 0.5 above wall
+        var dstPos = point + normal * (distGround + 1f); // will jump to 0.5 above wall
         var myForward = Vector3.Cross(transform.right, normal);
         var dstRot = Quaternion.LookRotation(myForward, normal);
         for (float t = 0.0f; t < 1.0; ){
