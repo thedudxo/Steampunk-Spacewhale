@@ -5,7 +5,7 @@ using UnityEngine;
 public class NewSwitch : MonoBehaviour {
 
     //movement
-    public float moveSpeed;
+    private float moveSpeed;
     public float walkSpeed = 6;
     public float runSpeed = 15;
     public float slideSpeed = 15;
@@ -13,6 +13,10 @@ public class NewSwitch : MonoBehaviour {
     public float runTimer = 0;
     public float runMax = 5;
     private bool running = false;
+    private bool crouching = false;
+    private float height;
+    private float standHeight = 1;
+    private float crouchHeight = 0;
 
     public GameObject cam;
     public GameObject player;
@@ -35,6 +39,8 @@ public class NewSwitch : MonoBehaviour {
         gameObject.GetComponent<Rigidbody>().freezeRotation = true; // disable physics rotation
         // distance from transform.position to ground
         distGround = GetComponent<Collider>().bounds.extents.y - GetComponent<Collider>().bounds.center.y;
+        moveSpeed = walkSpeed;
+        height = cam.transform.position.y;
     }
 
     void FixedUpdate()
@@ -60,7 +66,7 @@ public class NewSwitch : MonoBehaviour {
                 isGrounded = false;
             }
         }
-        Debug.Log(isGrounded);
+        Debug.Log(crouching);
 
         // movement code - Rotate with mouse Input:
         transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
@@ -88,6 +94,18 @@ public class NewSwitch : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift) && !running) {
             running = true;
             runTimer = 0.0f;
+        }
+        Vector3 crouch = cam.transform.localPosition;
+        if (Input.GetKeyDown(KeyCode.C)) {
+            if (!crouching) {
+                transform.localScale = new Vector3(1, 0.7f, 1);
+                moveSpeed = crouchSpeed;
+                crouching = true;
+            } else if (crouching) {
+                transform.localScale = new Vector3(1, 1, 1);
+                moveSpeed = walkSpeed;
+                crouching = false;
+            }
         }
 
         if (running)
