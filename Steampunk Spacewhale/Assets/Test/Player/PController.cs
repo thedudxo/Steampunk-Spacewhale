@@ -2,21 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewSwitch : MonoBehaviour {
-
+public class PController : MonoBehaviour {
     //movement
-    private float moveSpeed;
-    public float walkSpeed = 6;
-    public float runSpeed = 15;
-    public float slideSpeed = 15;
-    public float crouchSpeed = 3;
-    public float runTimer = 0;
-    public float runMax = 5;
-    private bool running = false;
-    private bool crouching = false;
-    private float height;
-    private float standHeight = 1;
-    private float crouchHeight = 0;
+    public float moveSpeed;
 
     public GameObject cam;
     public GameObject player;
@@ -32,54 +20,49 @@ public class NewSwitch : MonoBehaviour {
     private Vector3 myNormal; // character normal
     private float distGround; // distance from character position to ground
     private bool jumping = false; // flag &quot;I'm jumping to wall&quot;
-    private float vertSpeed = 0; // vertical jump current speed 
- 
+    private static PController instance;
+    public static PController Instance {
+        get {
+            if (instance == null) {
+                instance = GameObject.FindObjectOfType<PController>();
+            }
+            return PController.instance;
+        }
+    }
     void Start() {
         myNormal = transform.up; // normal starts as character up direction 
         gameObject.GetComponent<Rigidbody>().freezeRotation = true; // disable physics rotation
         // distance from transform.position to ground
         distGround = GetComponent<Collider>().bounds.extents.y - GetComponent<Collider>().bounds.center.y;
-        moveSpeed = walkSpeed;
-        height = cam.transform.position.y;
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         // apply constant weight force according to character normal:
         rb = GetComponent<Rigidbody>();
         rb.AddForce(-gravity * rb.mass * myNormal);
-
         // jump code - jump to wall or simple jump
         if (jumping) { return; } // abort Update while jumping to a wall
         Ray ray;
         RaycastHit hit;
-        if (Input.GetButtonDown("Jump"))
-        { // jump pressed:
+        if (Input.GetButtonDown("Jump")) { // jump pressed:
             ray = new Ray(transform.position, transform.forward);
-            if (Physics.Raycast(ray, out hit, jumpRange))
-            { // wall ahead?
+            if (Physics.Raycast(ray, out hit, jumpRange)) { // wall ahead?
                 StartCoroutine(JumpToWall(hit.point, hit.normal)); // yes: jump to the wall
-            }
-            else if (isGrounded)
-            { // no: if grounded, jump up
+            } else if (isGrounded) { // no: if grounded, jump up
                 rb.velocity += jumpSpeed * myNormal;
                 isGrounded = false;
             }
         }
-        Debug.Log(crouching);
 
         // movement code - Rotate with mouse Input:
         transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
         // update surface normal and isGrounded:
         ray = new Ray(transform.position, -myNormal); // cast ray downwards
-        if (Physics.Raycast(ray, out hit))
-        { // use it to update myNormal and isGrounded
+        if (Physics.Raycast(ray, out hit)) { // use it to update myNormal and isGrounded
             isGrounded = hit.distance <= distGround + deltaGround;
             surfaceNormal = hit.normal;
             isGrounded = true;
-        }
-        else
-        {
+        } else {
             isGrounded = false;
             // assume usual ground normal to avoid "falling forever"
             surfaceNormal = Vector3.up;
@@ -88,37 +71,7 @@ public class NewSwitch : MonoBehaviour {
         Debug.DrawRay(transform.position, -transform.up * Mathf.Infinity, Color.red);
     }
 
-    void Update()
-    {
-        //run script
-        if(Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift) && !running) {
-            running = true;
-            runTimer = 0.0f;
-        }
-        Vector3 crouch = cam.transform.localPosition;
-        if (Input.GetKeyDown(KeyCode.C)) {
-            if (!crouching) {
-                transform.localScale = new Vector3(1, 0.7f, 1);
-                moveSpeed = crouchSpeed;
-                crouching = true;
-            } else if (crouching) {
-                transform.localScale = new Vector3(1, 1, 1);
-                moveSpeed = walkSpeed;
-                crouching = false;
-            }
-        }
-
-        if (running)
-        {
-            moveSpeed = runSpeed;
-            runTimer += Time.deltaTime;
-            if (runTimer > runMax)
-            {
-                running = false;
-                moveSpeed = walkSpeed;
-            }
-        } 
-
+    void Update() {
         myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed * Time.deltaTime);
         // find forward direction with new myNormal:
         var myForward = Vector3.Cross(transform.right, myNormal);
@@ -127,20 +80,19 @@ public class NewSwitch : MonoBehaviour {
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
         // move the character forth/back with Vertical axis:
         transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
-
     }
-
+    
     IEnumerator JumpToWall(Vector3 point, Vector3 normal) {
         // jump to wall 
         jumping = true; // signal it's jumping to wall
         rb.isKinematic = true; // disable physics while jumping
         var orgPos = transform.position;
         var orgRot = transform.rotation;
-        var dstPos = point + normal * (distGround + 1); // will jump to 0.5 above wall
+        var dstPos = point + normal * (distGround + 2); // will jump to 0.5 above wall
         var myForward = Vector3.Cross(transform.right, normal);
         var dstRot = Quaternion.LookRotation(myForward, normal);
         myNormal = normal; // update myNormal
-        for (float t = 0.0f; t < 1.0; ){
+        for (float t = 0.0f; t < 1.0;) {
             t += Time.deltaTime;
             transform.position = Vector3.Lerp(orgPos, dstPos, t);
             transform.rotation = Quaternion.Slerp(orgRot, dstRot, t);
@@ -149,5 +101,4 @@ public class NewSwitch : MonoBehaviour {
         rb.isKinematic = false; // enable physics
         jumping = false; // jumping to wall finished
     }
-
 }

@@ -3,103 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Slide : MonoBehaviour {
+    
+    private float standHeight = 1;
+    private float crouchHeight = 0.7f;
+    public float walkSpeed = 6;
+    public float runSpeed = 15;
+    public float slideSpeed = 15;
+    public float crouchSpeed = 3;
+    public float runTimer = 0;
+    public float runMax = 2;
+    private bool running = false;
+    private bool crouching = false;
 
-    public GameObject cam;
-    public GameObject player;
-    public float moveSpeed = 6;
-    public float turnSpeed = 90; // turning speed (degrees/second)
-    public float lerpSpeed = 10; // smoothing speed
-    public float gravity = 10;// gravity acceleration
-    public bool isGrounded;
-    public float deltaGround = 0.2f; // character is grounded up to this distance
-    public float jumpSpeed = 10; // vertical jump initial speed
-    public float jumpRange = 1; // range to detect target wall
-    private Rigidbody rb;
-    private Vector3 surfaceNormal; // current surface normal
-    private Vector3 myNormal; // character normal
-    private float distGround; // distance from character position to ground
-    private bool jumping = false; // flag &quot;I'm jumping to wall&quot;
-    private float vertSpeed = 0; // vertical jump current speed 
- 
-    void Start() {
-        myNormal = transform.up; // normal starts as character up direction 
-        gameObject.GetComponent<Rigidbody>().freezeRotation = true; // disable physics rotation
-        // distance from transform.position to ground
-        distGround = GetComponent<Collider>().bounds.extents.y - GetComponent<Collider>().bounds.center.y;
+    private void Start() {
+        PController.Instance.moveSpeed = walkSpeed;
     }
 
-    void FixedUpdate()
-    {
-        // apply constant weight force according to character normal:
-        rb = GetComponent<Rigidbody>();
-        rb.AddForce(-gravity * rb.mass * myNormal);
+    private void Update() {
+        var crouch = Input.GetKeyDown(KeyCode.C);
+        //run script
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift) && !running) {
+            running = true;
+            runTimer = 0.0f;
+        }
+        if (crouch && !running) {
+            StartCoroutine("Crouch");
+        }
 
-        // jump code - jump to wall or simple jump
-        if (jumping) { return; } // abort Update while jumping to a wall
-        Ray ray;
-        RaycastHit hit;
-        if (Input.GetButtonDown("Jump"))
-        { // jump pressed:
-            ray = new Ray(transform.position, transform.forward);
-            if (Physics.Raycast(ray, out hit, jumpRange))
-            { // wall ahead?
-                StartCoroutine(JumpToWall(hit.point, hit.normal)); // yes: jump to the wall
-            }
-            else if (isGrounded)
-            { // no: if grounded, jump up
-                rb.velocity += jumpSpeed * myNormal;
+        if (running) {
+            PController.Instance.moveSpeed = runSpeed;
+            runTimer += Time.deltaTime;
+            if (runTimer > runMax) {
+                PController.Instance.moveSpeed = walkSpeed;
+                running = false;
             }
         }
-
-        // movement code - Rotate with mouse Input:
-        transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
-        // update surface normal and isGrounded:
-        ray = new Ray(transform.position, -myNormal); // cast ray downwards
-        if (Physics.Raycast(ray, out hit))
-        { // use it to update myNormal and isGrounded
-            isGrounded = hit.distance <= distGround + deltaGround;
-            surfaceNormal = hit.normal;
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-            // assume usual ground normal to avoid "falling forever"
-            surfaceNormal = Vector3.up;
-        }
-        Debug.DrawRay(transform.position, transform.forward * jumpRange);
     }
 
-    void Update()
-    {
-        myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed * Time.deltaTime);
-        // find forward direction with new myNormal:
-        var myForward = Vector3.Cross(transform.right, myNormal);
-        // align character to the new myNormal while keeping the forward direction:
-        var targetRot = Quaternion.LookRotation(myForward, myNormal);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
-        // move the character forth/back with Vertical axis:
-        transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
-    }
-
-    IEnumerator JumpToWall(Vector3 point, Vector3 normal) {
-        // jump to wall 
-        jumping = true; // signal it's jumping to wall
-        rb.isKinematic = true; // disable physics while jumping
-        var orgPos = transform.position;
-        var orgRot = transform.rotation;
-        var dstPos = point + normal * (distGround + 1f); // will jump to 0.5 above wall
-        var myForward = Vector3.Cross(transform.right, normal);
-        var dstRot = Quaternion.LookRotation(myForward, normal);
-        for (float t = 0.0f; t < 1.0; ){
-            t += Time.deltaTime;
-            transform.position = Vector3.Lerp(orgPos, dstPos, t);
-            transform.rotation = Quaternion.Slerp(orgRot, dstRot, t);
-            yield return t;  // return here next frame
+    IEnumerator Crouch() {
+        if (!crouching) {
+            float c = 0.0f;
+            while (c <= 1) {
+                transform.localScale = new Vector3(1, Mathf.Lerp(standHeight, crouchHeight, c), 1);
+                c += Time.deltaTime * 3;
+                yield return null;
+            }
+            PController.Instance.moveSpeed = crouchSpeed;
+            crouching = true;
         }
-        myNormal = normal; // update myNormal
-        rb.isKinematic = false; // enable physics
-        jumping = false; // jumping to wall finished
+        else if (crouching) {
+            float c = 0.0f;
+            while (c <= 1) {
+                transform.localScale = new Vector3(1, Mathf.Lerp(crouchHeight, standHeight, c), 1);
+                c += Time.deltaTime * 3;
+                yield return null;
+            }
+            PController.Instance.moveSpeed = walkSpeed;
+            crouching = false;
+        }
     }
-
 }

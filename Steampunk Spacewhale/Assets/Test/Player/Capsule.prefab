@@ -23,7 +23,9 @@ GameObject:
   - component: {fileID: 23408036071808426}
   - component: {fileID: 136567613149224564}
   - component: {fileID: 54359002874923130}
-  - component: {fileID: 114051636509828982}
+  - component: {fileID: 114463960930010784}
+  - component: {fileID: 114723174033574852}
+  - component: {fileID: 114863070535921926}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -70,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1176092839058682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.7, y: 1, z: -25.8}
+  m_LocalPosition: {x: -8.8, y: 1.83, z: 0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4029835537443270}
@@ -177,33 +179,6 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1572568553418450}
   m_Enabled: 1
---- !u!114 &114051636509828982
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1176092839058682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3d26ece23bd5914db6f36c5ba17dcd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 1572568553418450}
-  player: {fileID: 1176092839058682}
-  moveSpeed: 6
-  walkSpeed: 6
-  runSpeed: 20
-  slideSpeed: 15
-  crouchSpeed: 3
-  runTimer: 0
-  runMax: 2
-  turnSpeed: 90
-  lerpSpeed: 10
-  gravity: 10
-  isGrounded: 0
-  deltaGround: 0.2
-  jumpSpeed: 5
-  jumpRange: 3
 --- !u!114 &114222998403828250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -217,6 +192,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 2
   playerBody: {fileID: 4327864405317800}
+--- !u!114 &114463960930010784
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1176092839058682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a003a0d035c608e46a5852508537572f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrainHugging: {fileID: 0}
+--- !u!114 &114723174033574852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1176092839058682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35c2f6ee42dd5684c9f5cee4328a12c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  player: {fileID: 0}
+  moveSpeed: 6
+  turnSpeed: 90
+  lerpSpeed: 10
+  gravity: 10
+  isGrounded: 0
+  deltaGround: 0.2
+  jumpSpeed: 10
+  jumpRange: 1
+--- !u!114 &114863070535921926
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1176092839058682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a003a0d035c608e46a5852508537572f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrainHugging: {fileID: 0}
 --- !u!124 &124844474278597446
 Behaviour:
   m_ObjectHideFlags: 1
