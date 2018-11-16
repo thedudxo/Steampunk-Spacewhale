@@ -80,6 +80,7 @@ public class PController : MonoBehaviour {
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
         // move the character forth/back with Vertical axis:
         transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
+        //Debug.Log(moveSpeed);
     }
     
     IEnumerator JumpToWall(Vector3 point, Vector3 normal) {
@@ -88,7 +89,7 @@ public class PController : MonoBehaviour {
         rb.isKinematic = true; // disable physics while jumping
         var orgPos = transform.position;
         var orgRot = transform.rotation;
-        var dstPos = point + normal * (distGround + 2); // will jump to 0.5 above wall
+        var dstPos = point + normal * (distGround + 1); // will jump to 0.5 above wall
         var myForward = Vector3.Cross(transform.right, normal);
         var dstRot = Quaternion.LookRotation(myForward, normal);
         myNormal = normal; // update myNormal
