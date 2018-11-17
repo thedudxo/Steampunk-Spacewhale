@@ -54,23 +54,31 @@ public class Slide : MonoBehaviour {
     IEnumerator SlideBoost(float duration = 10f) {
         PController.Instance.moveSpeed = slideSpeed;
         sliding = true;
+        float c = 0.0f;
+        while (c <= 1) {
+            transform.localScale = new Vector3(1, Mathf.Lerp(standHeight, crouchHeight, c), 1);
+            c += Time.deltaTime * 3;
+            yield return c;
+        }
+        running = false;
+        crouching = true;
         float elapsed = 0.0f;
         while (elapsed <= duration) {
             PController.Instance.moveSpeed = Mathf.Lerp(slideSpeed, walkSpeed, elapsed / duration);
             elapsed += Time.deltaTime * 7;
-            yield return null;
+            yield return elapsed;
         }
-        crouching = true;
         sliding = false;
     }
 
-    IEnumerator Crouch() {
+    IEnumerator Crouch()
+    {
         float c = 0.0f;
         if (!crouching) {
             while (c <= 1) {
                 transform.localScale = new Vector3(1, Mathf.Lerp(standHeight, crouchHeight, c), 1);
                 c += Time.deltaTime * 3;
-                yield return null;
+                yield return c;
             }
             crouching = true;
         }
