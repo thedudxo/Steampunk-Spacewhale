@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -475,6 +475,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!4 &1299627242 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4327864405317800, guid: 7e12fdb51f2c003449271015270f729b,
+    type: 2}
+  m_PrefabInternal: {fileID: 2088960247}
+--- !u!1 &1453079511 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1572568553418450, guid: 7e12fdb51f2c003449271015270f729b,
+    type: 2}
+  m_PrefabInternal: {fileID: 2088960247}
+--- !u!114 &1453079515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1453079511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f12c467ccdefc4da8d77e56b0eb71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1299627242}
+  turnSpeed: 5
 --- !u!1001 &1564475115
 Prefab:
   m_ObjectHideFlags: 0
@@ -598,7 +621,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4327864405317800, guid: 7e12fdb51f2c003449271015270f729b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 29.25
+      value: 25.83
       objectReference: {fileID: 0}
     - target: {fileID: 4327864405317800, guid: 7e12fdb51f2c003449271015270f729b, type: 2}
       propertyPath: m_LocalPosition.y
@@ -606,7 +629,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4327864405317800, guid: 7e12fdb51f2c003449271015270f729b, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -26.21
+      value: -26.68
       objectReference: {fileID: 0}
     - target: {fileID: 4327864405317800, guid: 7e12fdb51f2c003449271015270f729b, type: 2}
       propertyPath: m_LocalRotation.x
