@@ -77,6 +77,7 @@ public class Slide : MonoBehaviour {
         if (!crouching) {
             while (c <= 1) {
                 transform.localScale = new Vector3(1, Mathf.Lerp(standHeight, crouchHeight, c), 1);
+                PController.Instance.moveSpeed = Mathf.Lerp(walkSpeed, crouchSpeed, c);
                 c += Time.deltaTime * 3;
                 yield return c;
             }
@@ -85,8 +86,9 @@ public class Slide : MonoBehaviour {
         else if (crouching) {
             while (c <= 1) {
                 transform.localScale = new Vector3(1, Mathf.Lerp(crouchHeight, standHeight, c), 1);
+                PController.Instance.moveSpeed = Mathf.Lerp(crouchSpeed, walkSpeed, c);
                 c += Time.deltaTime * 3;
-                yield return null;
+                yield return c;
             }
             crouching = false;
         }
