@@ -2,12 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interact : MonoBehaviour {
-
-    public float armLength = 2f;
-
-    RaycastHit Hit;
-
+public class Interactable : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

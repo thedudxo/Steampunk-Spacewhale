@@ -57,7 +57,7 @@ public class PController : MonoBehaviour {
 
         // update surface normal and isGrounded:
         ray = new Ray(transform.position, -myNormal); // cast ray downwards
-        if (Physics.Raycast(ray, out hit, 5f)) { // use it to update myNormal and isGrounded
+        if (Physics.Raycast(ray, out hit, 1.5f)) { // use it to update myNormal and isGrounded
             isGrounded = hit.distance <= distGround + deltaGround;
             surfaceNormal = hit.normal;
             isGrounded = true;
