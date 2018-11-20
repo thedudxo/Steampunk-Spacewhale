@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 4029835537443270}
   - component: {fileID: 20102596297542040}
   - component: {fileID: 124844474278597446}
+  - component: {fileID: 114328140520527318}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -69,7 +70,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1176092839058682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.25, y: 1, z: -26.21}
+  m_LocalPosition: {x: 25.83, y: 1, z: -26.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4029835537443270}
@@ -169,6 +170,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &114328140520527318
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1572568553418450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f12c467ccdefc4da8d77e56b0eb71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 4327864405317800}
+  turnSpeed: 5
 --- !u!114 &114463960930010784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -181,8 +195,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  cam: {fileID: 1572568553418450}
-  player: {fileID: 1176092839058682}
   turnSpeed: 90
   lerpSpeed: 10
   gravity: 10
@@ -207,6 +219,7 @@ MonoBehaviour:
   crouchSpeed: 3
   runTimer: 0
   runMax: 3
+  running: 0
   crouching: 0
 --- !u!124 &124844474278597446
 Behaviour:
