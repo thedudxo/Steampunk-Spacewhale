@@ -5,10 +5,7 @@ using UnityEngine;
 public class PController : MonoBehaviour {
     //movement
     public float moveSpeed;
-
-    public GameObject cam;
-    public GameObject player;
-    public float turnSpeed = 90; // turning speed (degrees/second)
+    public float turnSpeed = 90;
     public float lerpSpeed = 10; // smoothing speed
     public float gravity = 10;// gravity acceleration
     public bool isGrounded;
@@ -29,6 +26,10 @@ public class PController : MonoBehaviour {
             return PController.instance;
         }
     }
+    private void Awake() {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     void Start() {
         myNormal = transform.up; // normal starts as character up direction 
         gameObject.GetComponent<Rigidbody>().freezeRotation = true; // disable physics rotation
@@ -54,11 +55,9 @@ public class PController : MonoBehaviour {
             }
         }
 
-        // movement code - Rotate with mouse Input:
-        transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
         // update surface normal and isGrounded:
         ray = new Ray(transform.position, -myNormal); // cast ray downwards
-        if (Physics.Raycast(ray, out hit)) { // use it to update myNormal and isGrounded
+        if (Physics.Raycast(ray, out hit, 1.5f)) { // use it to update myNormal and isGrounded
             isGrounded = hit.distance <= distGround + deltaGround;
             surfaceNormal = hit.normal;
             isGrounded = true;
@@ -72,6 +71,7 @@ public class PController : MonoBehaviour {
     }
 
     void Update() {
+        transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
         myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed * Time.deltaTime);
         // find forward direction with new myNormal:
         var myForward = Vector3.Cross(transform.right, myNormal);
