@@ -11,7 +11,7 @@ public class PController : MonoBehaviour {
     public bool isGrounded;
     public float deltaGround = 0.2f; // character is grounded up to this distance
     public float jumpSpeed = 5; // vertical jump initial speed
-    public float jumpRange = 3; // range to detect target wall
+    public float jumpRange = 0.5f; // range to detect target wall
     private Rigidbody rb;
     private Vector3 surfaceNormal; // current surface normal
     private Vector3 myNormal; // character normal
@@ -57,7 +57,7 @@ public class PController : MonoBehaviour {
 
         // update surface normal and isGrounded:
         ray = new Ray(transform.position, -myNormal); // cast ray downwards
-        if (Physics.Raycast(ray, out hit, 1.5f)) { // use it to update myNormal and isGrounded
+        if (Physics.Raycast(ray, out hit, jumpRange)) { // use it to update myNormal and isGrounded
             isGrounded = hit.distance <= distGround + deltaGround;
             surfaceNormal = hit.normal;
             isGrounded = true;
@@ -94,7 +94,7 @@ public class PController : MonoBehaviour {
         var dstRot = Quaternion.LookRotation(myForward, normal);
         myNormal = normal; // update myNormal
         for (float t = 0.0f; t < 1.0;) {
-            t += Time.deltaTime;
+            t += Time.deltaTime * 2;
             transform.position = Vector3.Lerp(orgPos, dstPos, t);
             transform.rotation = Quaternion.Slerp(orgRot, dstRot, t);
             yield return t;  // return here next frame
