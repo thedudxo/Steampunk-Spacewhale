@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour {
+public class Respawn : MonoBehaviour {
+
+    GameObject currentCheckpoint;
+    
 
 	// Use this for initialization
 	void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+   
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }
