@@ -11,7 +11,7 @@ public class PController : MonoBehaviour
     public float gravity = 10;// gravity acceleration
     public float deltaGround = 0.2f; // character is grounded up to this distance
     public float jumpSpeed = 5; // vertical jump initial speed
-    public float jumpRange = 1.5f; // range to detect target wall
+    public float jumpRange = 2f; // range to detect target wall
     public bool isGrounded;
     public GameObject currentFloor;
     public GameObject previousFloor;
@@ -22,24 +22,19 @@ public class PController : MonoBehaviour
     private float distGround; // distance from character position to ground
     private bool jumping = false; // flag &quot;I'm jumping to wall&quot;
     private static PController instance;
-    public static PController Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
+    public static PController Instance {
+        get {
+            if (instance == null) {
                 instance = GameObject.FindObjectOfType<PController>();
             }
             return PController.instance;
         }
     }
-    private void Awake()
-    {
+    private void Awake() {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Start()
-    {
+    void Start() {
         myNormal = transform.up; // normal starts as character up direction 
         gameObject.GetComponent<Rigidbody>().freezeRotation = true; // disable physics rotation
         // distance from transform.position to ground
@@ -47,68 +42,50 @@ public class PController : MonoBehaviour
         Ray colRay;
         RaycastHit colHit;
         colRay = new Ray(transform.position, -transform.up);
-        if (Physics.Raycast(colRay, out colHit, jumpRange))
-        {
-            currentFloor = colHit.collider.gameObject;
+        if (Physics.Raycast(colRay, out colHit)) {
+            currentFloor = colHit.collider.gameObject; //set current flooras game starts
         }
     }
 
-    private void OnCollisionEnter(Collision col)
-    {
-        if (col.collider.gameObject == currentFloor || col.collider.gameObject == previousFloor)
-        {
-            return;
-        }
-        else if (col.gameObject != currentFloor)
-        {
+    private void OnCollisionEnter(Collision col) {
+        if (col.collider.gameObject == currentFloor || col.collider.gameObject == previousFloor) { return; } // ignore when colliding with current floor
+        else if (col.gameObject != currentFloor) {
             ContactPoint contact = col.contacts[0];
-            surfaceNormal = contact.normal;
-            StartCoroutine(JumpToWall(contact.point, contact.normal));
+            surfaceNormal = contact.normal; //set surface normal to collision
+            StartCoroutine(JumpToWall(contact.point, contact.normal)); //jump to wall
             Debug.Log("Switch");
-        }
-        else
-        {
+        } else {
             currentFloor = col.gameObject;
         }
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         // apply constant weight force according to character normal:
         rb = GetComponent<Rigidbody>();
         rb.AddForce(-gravity * rb.mass * myNormal);
         // jump code - jump to wall or simple jump
         if (jumping) { return; } // abort Update while jumping to a wall
-        Ray ray;
-        RaycastHit hit;
-        if (Input.GetButtonDown("Jump"))
-        { // jump pressed:
-            if (isGrounded)
-            { // no: if grounded, jump up
+        Ray jumpRay;
+        RaycastHit jumpHit;
+        jumpRay = new Ray(transform.position, -myNormal);
+        if (Physics.Raycast(jumpRay, out jumpHit, jumpRange)) { //jump ray checks for the ground underneath player
+            isGrounded = true;
+        } else {
+            isGrounded = false;
+        }
+        if (Input.GetButtonDown("Jump")) { // jump pressed:
+            if (isGrounded) { // no: if grounded, jump up
                 rb.velocity += jumpSpeed * myNormal;
-                isGrounded = false;
             }
         }
+        Ray ray;
+        RaycastHit hit;
         // update surface normal and isGrounded:
         ray = new Ray(transform.position, -myNormal); // cast ray downwards
-        if (Physics.Raycast(ray, out hit, jumpRange))
-        { // use it to update myNormal and isGrounded
+        if (Physics.Raycast(ray, out hit)) { // use it to update myNormal and isGrounded
             isGrounded = hit.distance <= distGround + deltaGround;
             surfaceNormal = hit.normal;
-            isGrounded = true;
         }
-        else
-        {
-            isGrounded = false;
-            // assume usual ground normal to avoid "falling forever"
-            surfaceNormal = Vector3.up;
-        }
-        Debug.DrawRay(transform.position, transform.forward * jumpRange);
-        Debug.DrawRay(transform.position, -transform.up * jumpRange, Color.red);
-    }
-
-    void Update()
-    {
         transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
         myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed * Time.deltaTime);
         // find forward direction with new myNormal:
@@ -118,11 +95,9 @@ public class PController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
         // move the character
         transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
-        //Debug.Log(moveSpeed);
     }
 
-    IEnumerator JumpToWall(Vector3 point, Vector3 normal)
-    { // jump to wall 
+    IEnumerator JumpToWall(Vector3 point, Vector3 normal) { // jump to wall 
         jumping = true; // signal it's jumping to wall
         rb.isKinematic = true; // disable physics while jumping
         var orgPos = transform.position;
@@ -131,30 +106,27 @@ public class PController : MonoBehaviour
         var myForward = Vector3.Cross(transform.right, normal);
         var dstRot = Quaternion.LookRotation(myForward, normal);
         myNormal = normal; // update myNormal
-        for (float t = 0.0f; t < 1.0;)
-        {
+        for (float t = 0.0f; t < 1.0;) {
             t += Time.deltaTime * 2;
             transform.position = Vector3.Lerp(orgPos, dstPos, t);
             transform.rotation = Quaternion.Slerp(orgRot, dstRot, t);
             yield return t;  // return here next frame
         }
         rb.isKinematic = false; // enable physics
-        previousFloor = currentFloor;
+        previousFloor = currentFloor; //set previous floor
         Ray colRay;
         RaycastHit colHit;
         colRay = new Ray(transform.position, -transform.up);
-        if (Physics.Raycast(colRay, out colHit, jumpRange))
-        {
-            currentFloor = colHit.collider.gameObject;
+        if (Physics.Raycast(colRay, out colHit, jumpRange)) { //shoot ray down
+            currentFloor = colHit.collider.gameObject; // ray gets current floor for player
         }
         jumping = false; // jumping to wall finished
-        StartCoroutine(WaitIgnore());
+        StartCoroutine(WaitIgnore()); //start ignore
     }
 
-    IEnumerator WaitIgnore()
-    {
+    IEnumerator WaitIgnore() {
         yield return new WaitForSeconds(ignore);
-        previousFloor = null;
+        previousFloor = null; //after certain amount of seconds set previous floor to null
         yield return null;
     }
 }
