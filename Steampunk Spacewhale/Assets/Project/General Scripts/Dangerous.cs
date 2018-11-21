@@ -6,17 +6,23 @@ using UnityEngine.UI;
 public class Dangerous : MonoBehaviour {
     private bool newCollision = true;
     public float decay = 0.03f;
+    private float deathTime = 0.01f;
+    private float deathTimer;
     public GameObject Green;
     private Color color;
     bool flashing = false;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    private void Reset()
+    {
+        if (Respawn.dead) { return; }
+        newCollision = true;
+        flashing = false;
+        Green.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        deathTimer = 0;
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (flashing)
         {
             float oldAlpha = Green.GetComponent<Image>().color.a;
@@ -25,6 +31,18 @@ public class Dangerous : MonoBehaviour {
             {
                 color = Green.GetComponent<Image>().color = new Color(0, 1, 0, 0.8f);
             }
+
+            deathTimer += Time.deltaTime;
+            if (deathTimer >= deathTime)
+            {
+                color = Green.GetComponent<Image>().color = new Color(1, 0, 0, 1f);
+                flashing = false;
+                Respawn.dead = true;
+                Respawn.Kill();
+            }
+        } else if (!Respawn.dead)
+        {
+            Green.GetComponent<Image>().color = new Color(0, 0, 0, 0);
         }
     }
 
@@ -41,8 +59,6 @@ public class Dangerous : MonoBehaviour {
 
     private void OnCollisionExit(Collision collision)
     {
-        newCollision = true;
-        flashing = false;
-        Green.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        Reset();
     }
 }
