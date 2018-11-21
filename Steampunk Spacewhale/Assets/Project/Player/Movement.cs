@@ -21,6 +21,15 @@ public class Movement : MonoBehaviour {
     }
 
     private void Update() {
+        if (crouching && !sliding && !running) {
+            PController.Instance.moveSpeed = crouchSpeed;
+        }
+        else if (!crouching && !sliding && !running) {
+            PController.Instance.moveSpeed = walkSpeed;
+        } else if (!crouching && !sliding && running) {
+            PController.Instance.moveSpeed = runSpeed;
+        }
+
         var crouch = Input.GetKeyDown(KeyCode.C);
         //run script
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift) && !running) {
@@ -39,52 +48,7 @@ public class Movement : MonoBehaviour {
                 StartCoroutine(SlideBoost());
             }
         }
-    }
-
-    IEnumerator Crouch() {
-        float c = 0.0f;
-        if (!crouching) {
-            while (c <= 1) {
-                transform.localScale = new Vector3(1, Mathf.Lerp(standHeight, crouchHeight, c), 1);
-                PController.Instance.moveSpeed = Mathf.Lerp(walkSpeed, crouchSpeed, c);
-                c += Time.deltaTime * 3;
-                yield return c;
-            }
-            crouching = true;
-            PController.Instance.moveSpeed = crouchSpeed;
-        }
-        else if (crouching) {
-            while (c <= 1) {
-                PController.Instance.moveSpeed = Mathf.Lerp(crouchSpeed, walkSpeed, c);
-                transform.localScale = new Vector3(1, Mathf.Lerp(crouchHeight, standHeight, c), 1);
-                c += Time.deltaTime * 3;
-                yield return c;
-            }
-            crouching = false;
-            PController.Instance.moveSpeed = walkSpeed;
-        }
-    }
-
-    IEnumerator Run() {
-        float r = 0.0f;
-        if (!running) {
-            runTimer = 0;
-            while (r <= 1) {
-                PController.Instance.moveSpeed = Mathf.Lerp(walkSpeed, runSpeed, r);
-                r += Time.deltaTime * 1.5f;
-                yield return r;
-            }
-            running = true;
-            PController.Instance.moveSpeed = runSpeed;
-        } else if (running) {
-            while (r <= 1) {
-                PController.Instance.moveSpeed = Mathf.Lerp(runSpeed, walkSpeed, r);
-                r += Time.deltaTime * 2;
-                yield return r;
-            }
-            running = false;
-            PController.Instance.moveSpeed = walkSpeed;
-        }
+        Debug.Log(crouching);
     }
 
     IEnumerator SlideBoost(float duration = 10f) {
@@ -105,6 +69,46 @@ public class Movement : MonoBehaviour {
             yield return elapsed;
         }
         sliding = false;
-        PController.Instance.moveSpeed = crouchSpeed;
+    }
+
+    IEnumerator Crouch() {
+        float c = 0.0f;
+        if (!crouching) {
+            while (c <= 1) {
+                transform.localScale = new Vector3(1, Mathf.Lerp(standHeight, crouchHeight, c), 1);
+                PController.Instance.moveSpeed = Mathf.Lerp(walkSpeed, crouchSpeed, c);
+                c += Time.deltaTime * 3;
+                yield return c;
+            }
+            crouching = true;
+        }
+        else if (crouching) {
+            while (c <= 1) {
+                transform.localScale = new Vector3(1, Mathf.Lerp(crouchHeight, standHeight, c), 1);
+                PController.Instance.moveSpeed = Mathf.Lerp(crouchSpeed, walkSpeed, c);
+                c += Time.deltaTime * 3;
+                yield return c;
+            }
+            crouching = false;
+        }
+    }
+    IEnumerator Run() {
+        float r = 0.0f;
+        if (!running) {
+            runTimer = 0;
+            while (r <= 1) {
+                PController.Instance.moveSpeed = Mathf.Lerp(walkSpeed, runSpeed, r);
+                r += Time.deltaTime * 1.5f;
+                yield return r;
+            }
+            running = true;
+        } else if (running) {
+            while (r <= 1) {
+                PController.Instance.moveSpeed = Mathf.Lerp(runSpeed, walkSpeed, r);
+                r += Time.deltaTime * 2;
+                yield return r;
+            }
+            running = false;
+        }
     }
 }
