@@ -8,13 +8,10 @@ public class PController : MonoBehaviour {
     public float turnSpeed = 90;
     public float lerpSpeed = 10; // smoothing speed
     public float gravity = 10;// gravity acceleration
+    public bool isGrounded;
     public float deltaGround = 0.2f; // character is grounded up to this distance
     public float jumpSpeed = 5; // vertical jump initial speed
-    public float jumpRange = 1.5f; // range to detect target wall
-    public bool isGrounded;
-    public GameObject currentFloor;
-    public GameObject previousFloor;
-    private float ignore = 1;
+    public float jumpRange = 0.5f; // range to detect target wall
     private Rigidbody rb;
     private Vector3 surfaceNormal; // current surface normal
     private Vector3 myNormal; // character normal
@@ -32,31 +29,12 @@ public class PController : MonoBehaviour {
     private void Awake() {
         Cursor.lockState = CursorLockMode.Locked;
     }
-    
+
     void Start() {
         myNormal = transform.up; // normal starts as character up direction 
         gameObject.GetComponent<Rigidbody>().freezeRotation = true; // disable physics rotation
         // distance from transform.position to ground
         distGround = GetComponent<Collider>().bounds.extents.y - GetComponent<Collider>().bounds.center.y;
-        Ray colRay;
-        RaycastHit colHit;
-        colRay = new Ray(transform.position, -transform.up);
-        if (Physics.Raycast(colRay, out colHit, jumpRange)) {
-            currentFloor = colHit.collider.gameObject;
-        }
-    }
-    
-    private void OnCollisionEnter(Collision col) {
-        if (col.collider.gameObject == currentFloor || col.collider.gameObject == previousFloor) {   
-            return;
-        } else if (col.gameObject != currentFloor) { 
-            ContactPoint contact = col.contacts[0];
-            surfaceNormal = contact.normal;
-            StartCoroutine(JumpToWall(contact.point, contact.normal));
-            Debug.Log("Switch");
-        } else {
-            currentFloor = col.gameObject;
-        }
     }
 
     void FixedUpdate() {
@@ -68,11 +46,15 @@ public class PController : MonoBehaviour {
         Ray ray;
         RaycastHit hit;
         if (Input.GetButtonDown("Jump")) { // jump pressed:
-            if (isGrounded) { // no: if grounded, jump up
+            ray = new Ray(transform.position, transform.forward);
+            if (Physics.Raycast(ray, out hit, jumpRange)) { // wall ahead?
+                StartCoroutine(JumpToWall(hit.point, hit.normal)); // yes: jump to the wall
+            } else if (isGrounded) { // no: if grounded, jump up
                 rb.velocity += jumpSpeed * myNormal;
                 isGrounded = false;
             }
         }
+
         // update surface normal and isGrounded:
         ray = new Ray(transform.position, -myNormal); // cast ray downwards
         if (Physics.Raycast(ray, out hit, jumpRange)) { // use it to update myNormal and isGrounded
@@ -85,7 +67,7 @@ public class PController : MonoBehaviour {
             surfaceNormal = Vector3.up;
         }
         Debug.DrawRay(transform.position, transform.forward * jumpRange);
-        Debug.DrawRay(transform.position, -transform.up * jumpRange, Color.red);
+        Debug.DrawRay(transform.position, -transform.up * Mathf.Infinity, Color.red);
     }
 
     void Update() {
@@ -96,12 +78,13 @@ public class PController : MonoBehaviour {
         // align character to the new myNormal while keeping the forward direction:
         var targetRot = Quaternion.LookRotation(myForward, myNormal);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
-        // move the character
+        // move the character forth/back with Vertical axis:
         transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
         //Debug.Log(moveSpeed);
     }
     
-    IEnumerator JumpToWall(Vector3 point, Vector3 normal) { // jump to wall 
+    IEnumerator JumpToWall(Vector3 point, Vector3 normal) {
+        // jump to wall 
         jumping = true; // signal it's jumping to wall
         rb.isKinematic = true; // disable physics while jumping
         var orgPos = transform.position;
@@ -117,20 +100,6 @@ public class PController : MonoBehaviour {
             yield return t;  // return here next frame
         }
         rb.isKinematic = false; // enable physics
-        previousFloor = currentFloor;
-        Ray colRay;
-        RaycastHit colHit;
-        colRay = new Ray(transform.position, -transform.up);
-        if (Physics.Raycast(colRay, out colHit, jumpRange)) {
-            currentFloor = colHit.collider.gameObject;
-        }
         jumping = false; // jumping to wall finished
-        StartCoroutine(WaitIgnore());
-    }
-
-    IEnumerator WaitIgnore() {
-        yield return new WaitForSeconds(ignore);
-        previousFloor = null;
-        yield return null;
     }
 }
