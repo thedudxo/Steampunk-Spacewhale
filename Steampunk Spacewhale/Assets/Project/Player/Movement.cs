@@ -48,7 +48,7 @@ public class Movement : MonoBehaviour {
                 StartCoroutine(SlideBoost());
             }
         }
-        Debug.Log(crouching);
+        //Debug.Log(crouching);
     }
 
     IEnumerator SlideBoost(float duration = 10f) {
