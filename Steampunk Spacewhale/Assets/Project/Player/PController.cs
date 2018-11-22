@@ -17,7 +17,7 @@ public class PController : MonoBehaviour
     public GameObject previousFloor;
     private float ignore = 1;
     private Rigidbody rb;
-    private Vector3 surfaceNormal; // current surface normal
+    public static Vector3 surfaceNormal; // current surface normal
     public Vector3 myNormal; // character normal
     private float distGround; // distance from character position to ground
     private bool jumping = false; // flag &quot;I'm jumping to wall&quot;

@@ -16,6 +16,7 @@ public class Respawn : MonoBehaviour {
         {
             dead = false;
             currentCheckpoint.GetComponent<Checkpoint>().UseCheckpoint(gameObject);
+            PController.surfaceNormal = Vector3.up;
         }
     }
 
