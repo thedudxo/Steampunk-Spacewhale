@@ -107,7 +107,7 @@ public class PController : MonoBehaviour
         var dstRot = Quaternion.LookRotation(myForward, normal);
         myNormal = normal; // update myNormal
         for (float t = 0.0f; t < 1.0;) {
-            t += Time.deltaTime * 2;
+            t += Time.deltaTime * 5;
             transform.position = Vector3.Lerp(orgPos, dstPos, t);
             transform.rotation = Quaternion.Slerp(orgRot, dstRot, t);
             yield return t;  // return here next frame
