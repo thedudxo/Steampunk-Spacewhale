@@ -23,8 +23,7 @@ public class Movement : MonoBehaviour {
     private void Update() {
         if (crouching && !sliding && !running) {
             PController.Instance.moveSpeed = crouchSpeed;
-        }
-        else if (!crouching && !sliding && !running) {
+        }else if (!crouching && !sliding && !running) {
             PController.Instance.moveSpeed = walkSpeed;
         } else if (!crouching && !sliding && running) {
             PController.Instance.moveSpeed = runSpeed;
