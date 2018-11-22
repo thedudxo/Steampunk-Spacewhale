@@ -3121,6 +3121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showCheckpoint: 0
   activatable: 1
+  doResetObject: 0
+  resetObject: {fileID: 736011308}
 --- !u!65 &736011310
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4620,6 +4622,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showCheckpoint: 0
   activatable: 1
+  doResetObject: 0
+  resetObject: {fileID: 736011308}
 --- !u!65 &1164869475
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5082,7 +5086,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1176297434}
   m_LocalRotation: {x: -0, y: -0.6955547, z: -0, w: 0.71847326}
-  m_LocalPosition: {x: -59, y: 1, z: -2.8}
+  m_LocalPosition: {x: -60.29, y: 1.83, z: -2.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1526494151}
@@ -5126,6 +5130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1178985253}
   - component: {fileID: 1178985254}
+  - component: {fileID: 1178985255}
   m_Layer: 0
   m_Name: Bridge
   m_TagString: Untagged
@@ -5164,6 +5169,17 @@ MonoBehaviour:
   catwalk: {fileID: 0}
   fallingSpeed: 0
   acceleration: 0
+--- !u!114 &1178985255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1178985252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 492252302bf079a498b59da4f959fc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1198415953
 GameObject:
   m_ObjectHideFlags: 0
@@ -8125,6 +8141,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showCheckpoint: 0
   activatable: 1
+  doResetObject: 1
+  resetObject: {fileID: 1178985252}
 --- !u!65 &1834062105
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9139,6 +9157,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showCheckpoint: 0
   activatable: 1
+  doResetObject: 0
+  resetObject: {fileID: 736011308}
 --- !u!65 &2020875576
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9326,7 +9346,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2032951145}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9179ada3fc990b7488f44fbd14c0b39a, type: 3}
   m_Name: 

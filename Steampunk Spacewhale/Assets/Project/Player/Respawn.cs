@@ -9,21 +9,13 @@ public class Respawn : MonoBehaviour {
     public GameObject deadText;
     public static KeyCode respawnKey = KeyCode.R;
     
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-
-   
-
     // Update is called once per frame
     void Update () {
         deadText.SetActive(dead);
         if (Input.GetKey(respawnKey))
         {
             dead = false;
-            transform.position = currentCheckpoint.transform.position;
+            currentCheckpoint.GetComponent<Checkpoint>().UseCheckpoint(gameObject);
         }
     }
 
