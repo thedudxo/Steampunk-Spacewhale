@@ -18,7 +18,7 @@ public class PController : MonoBehaviour
     private float ignore = 1;
     private Rigidbody rb;
     private Vector3 surfaceNormal; // current surface normal
-    private Vector3 myNormal; // character normal
+    public Vector3 myNormal; // character normal
     private float distGround; // distance from character position to ground
     private bool jumping = false; // flag &quot;I'm jumping to wall&quot;
     private static PController instance;
@@ -48,7 +48,7 @@ public class PController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision col) {
-        if (col.collider.gameObject == currentFloor || col.collider.gameObject == previousFloor) { return; } // ignore when colliding with current floor
+        if (col.collider.gameObject == currentFloor || col.collider.gameObject == previousFloor || col.gameObject.GetComponent<Unclimable>() != null) { return; } // ignore when colliding with current floor
         else if (col.gameObject != currentFloor) {
             ContactPoint contact = col.contacts[0];
             surfaceNormal = contact.normal; //set surface normal to collision
@@ -63,7 +63,7 @@ public class PController : MonoBehaviour
         // apply constant weight force according to character normal:
         rb = GetComponent<Rigidbody>();
         rb.AddForce(-gravity * rb.mass * myNormal);
-        // jump code - jump to wall or simple jump
+        // jump code - simple jump
         if (jumping) { return; } // abort Update while jumping to a wall
         Ray jumpRay;
         RaycastHit jumpHit;
