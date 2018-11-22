@@ -10,8 +10,8 @@ public class PController : MonoBehaviour
     public float lerpSpeed = 10; // smoothing speed
     public float gravity = 10;// gravity acceleration
     public float deltaGround = 0.2f; // character is grounded up to this distance
-    public float jumpSpeed = 5; // vertical jump initial speed
     public float jumpRange = 2f; // range to detect target wall
+    public float jumpLimit = 5f;
     public bool isGrounded;
     public GameObject currentFloor;
     public GameObject previousFloor;
@@ -48,6 +48,9 @@ public class PController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision col) {
+        if (col.gameObject.GetComponent<Unclimable>() != null && !isGrounded) {
+            moveSpeed = 0;
+        }
         if (col.collider.gameObject == currentFloor || col.collider.gameObject == previousFloor || col.gameObject.GetComponent<Unclimable>() != null) { return; } // ignore when colliding with current floor
         else if (col.gameObject != currentFloor) {
             ContactPoint contact = col.contacts[0];
@@ -65,26 +68,15 @@ public class PController : MonoBehaviour
         rb.AddForce(-gravity * rb.mass * myNormal);
         // jump code - simple jump
         if (jumping) { return; } // abort Update while jumping to a wall
-        Ray jumpRay;
-        RaycastHit jumpHit;
-        jumpRay = new Ray(transform.position, -myNormal);
-        if (Physics.Raycast(jumpRay, out jumpHit, jumpRange)) { //jump ray checks for the ground underneath player
-            isGrounded = true;
-        } else {
-            isGrounded = false;
-        }
-        if (Input.GetButtonDown("Jump")) { // jump pressed:
-            if (isGrounded) { // no: if grounded, jump up
-                rb.velocity += jumpSpeed * myNormal;
-            }
-        }
         Ray ray;
         RaycastHit hit;
         // update surface normal and isGrounded:
         ray = new Ray(transform.position, -myNormal); // cast ray downwards
-        if (Physics.Raycast(ray, out hit)) { // use it to update myNormal and isGrounded
+        if (Physics.Raycast(ray, out hit, jumpLimit)) { // use it to update myNormal and isGrounded
             isGrounded = hit.distance <= distGround + deltaGround;
             surfaceNormal = hit.normal;
+        } else {
+            surfaceNormal = Vector3.up;
         }
         transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
         myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed * Time.deltaTime);
