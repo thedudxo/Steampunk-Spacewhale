@@ -21,33 +21,46 @@ public class Movement : MonoBehaviour {
     }
 
     private void Update() {
-        if (crouching && !sliding && !running) {
-            PController.Instance.moveSpeed = crouchSpeed;
-        }else if (!crouching && !sliding && !running) {
-            PController.Instance.moveSpeed = walkSpeed;
-        } else if (!crouching && !sliding && running) {
-            PController.Instance.moveSpeed = runSpeed;
-        }
+        if (!Respawn.dead)
+        {
+            if (crouching && !sliding && !running)
+            {
+                PController.Instance.moveSpeed = crouchSpeed;
+            }
+            else if (!crouching && !sliding && !running)
+            {
+                PController.Instance.moveSpeed = walkSpeed;
+            }
+            else if (!crouching && !sliding && running)
+            {
+                PController.Instance.moveSpeed = runSpeed;
+            }
 
-        var crouch = Input.GetKeyDown(KeyCode.C);
-        //run script
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift) && !running) {
-            StartCoroutine(Run());
-        }
-        if (crouch && !running) {
-            StartCoroutine("Crouch");
-        }
-
-        if (running && !sliding) {
-            runTimer += Time.deltaTime;
-            if (runTimer > runMax || Input.GetKeyUp(KeyCode.W)) {
+            var crouch = Input.GetKeyDown(KeyCode.C);
+            //run script
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift) && !running)
+            {
                 StartCoroutine(Run());
             }
-            if (crouch) {
-                StartCoroutine(SlideBoost());
+            if (crouch && !running)
+            {
+                StartCoroutine("Crouch");
             }
+
+            if (running && !sliding)
+            {
+                runTimer += Time.deltaTime;
+                if (runTimer > runMax || Input.GetKeyUp(KeyCode.W))
+                {
+                    StartCoroutine(Run());
+                }
+                if (crouch)
+                {
+                    StartCoroutine(SlideBoost());
+                }
+            }
+            //Debug.Log(crouching);
         }
-        //Debug.Log(crouching);
     }
 
     IEnumerator SlideBoost(float duration = 10f) {

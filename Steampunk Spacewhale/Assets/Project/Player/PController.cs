@@ -67,7 +67,7 @@ public class PController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.AddForce(-gravity * rb.mass * myNormal);
         // jump code - simple jump
-        if (jumping) { return; } // abort Update while jumping to a wall
+        if (jumping || Respawn.dead) { return; } // abort Update while jumping to a wall
         Ray ray;
         RaycastHit hit;
         // update surface normal and isGrounded:
@@ -78,7 +78,10 @@ public class PController : MonoBehaviour
         } else {
             surfaceNormal = Vector3.up;
         }
-        transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
+        if (!Respawn.dead)
+        {
+            transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
+        }
         myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed * Time.deltaTime);
         // find forward direction with new myNormal:
         var myForward = Vector3.Cross(transform.right, myNormal);
@@ -86,7 +89,10 @@ public class PController : MonoBehaviour
         var targetRot = Quaternion.LookRotation(myForward, myNormal);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
         // move the character
-        transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
+        if (!Respawn.dead)
+        {
+            transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
+        }
     }
 
     IEnumerator JumpToWall(Vector3 point, Vector3 normal) { // jump to wall 
