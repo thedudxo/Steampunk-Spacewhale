@@ -65,7 +65,22 @@ public class PController : MonoBehaviour
         // apply constant weight force according to character normal:
         rb = GetComponent<Rigidbody>();
         rb.AddForce(-gravity * rb.mass * myNormal);
-        transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
+        // jump code - simple jump
+        if (jumping || Respawn.dead) { return; } // abort Update while jumping to a wall
+        Ray ray;
+        RaycastHit hit;
+        // update surface normal and isGrounded:
+        ray = new Ray(transform.position, -myNormal); // cast ray downwards
+        if (Physics.Raycast(ray, out hit, jumpLimit)) { // use it to update myNormal and isGrounded
+            isGrounded = hit.distance <= distGround + deltaGround;
+            surfaceNormal = hit.normal;
+        } else {
+            surfaceNormal = Vector3.up;
+        }
+        if (!Respawn.dead)
+        {
+            transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime, 0);
+        }
         myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed * Time.deltaTime);
         // find forward direction with new myNormal:
         var myForward = Vector3.Cross(transform.right, myNormal);
@@ -73,24 +88,10 @@ public class PController : MonoBehaviour
         var targetRot = Quaternion.LookRotation(myForward, myNormal);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
         // move the character
-        transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
-        // jump code - simple jump
-        if (jumping) { return; } // abort Update while jumping to a wall
-        Ray ray;
-        RaycastHit hit;
-        // update surface normal and isGrounded:
-        ray = new Ray(transform.position, -myNormal); // cast ray downwards
-        if (nope) {
-            if (Physics.Raycast(ray, out hit, jumpLimit)) { // use it to update myNormal and isGrounded
-                isGrounded = hit.distance <= deltaGround;
-                surfaceNormal = hit.normal;
-            } else {
-                surfaceNormal = Vector3.up;
-                jumping = true;
-                StartCoroutine(Stop());
-            }
+        if (!Respawn.dead)
+        {
+            transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
         }
-        Debug.DrawRay(transform.position, -myNormal * jumpLimit, Color.red, 2);
     }
 
     IEnumerator JumpToWall(Vector3 point, Vector3 normal) { // jump to wall 
@@ -103,7 +104,7 @@ public class PController : MonoBehaviour
         var dstRot = Quaternion.LookRotation(myForward, normal);
         myNormal = normal; // update myNormal
         for (float t = 0.0f; t < 1.0;) {
-            t += Time.deltaTime * 2;
+            t += Time.deltaTime * 5;
             transform.position = Vector3.Lerp(orgPos, dstPos, t);
             transform.rotation = Quaternion.Slerp(orgRot, dstRot, t);
             yield return t;  // return here next frame
