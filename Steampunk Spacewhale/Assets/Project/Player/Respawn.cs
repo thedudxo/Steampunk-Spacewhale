@@ -7,6 +7,7 @@ public class Respawn : MonoBehaviour {
     public static GameObject currentCheckpoint;
     public static bool dead = false;
     public GameObject deadText;
+    public GameObject deadScreen;
     public static KeyCode respawnKey = KeyCode.R;
     
     // Update is called once per frame
@@ -16,6 +17,9 @@ public class Respawn : MonoBehaviour {
         {
             dead = false;
             currentCheckpoint.GetComponent<Checkpoint>().UseCheckpoint(gameObject);
+            PController.surfaceNormal = Vector3.up;
+            deadScreen.SetActive(false);
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     }
 
