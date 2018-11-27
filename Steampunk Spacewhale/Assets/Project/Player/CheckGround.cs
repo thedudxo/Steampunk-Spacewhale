@@ -29,5 +29,6 @@ public class CheckGround : MonoBehaviour {
             PController.Instance.surfaceNormal = Vector3.up;
         }
         Debug.DrawRay(transform.position, -PController.Instance.myNormal * PController.Instance.jumpLimit, Color.red);
+        Debug.Log(PController.Instance.nope);
     }
 }
