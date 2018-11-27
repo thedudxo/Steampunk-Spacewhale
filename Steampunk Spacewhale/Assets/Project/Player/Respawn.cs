@@ -9,7 +9,7 @@ public class Respawn : MonoBehaviour {
     public GameObject deadText;
     public GameObject deadScreen;
     public static KeyCode respawnKey = KeyCode.R;
-    
+
     // Update is called once per frame
     void Update () {
         deadText.SetActive(dead);
