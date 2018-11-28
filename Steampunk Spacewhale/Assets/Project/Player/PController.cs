@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PController : MonoBehaviour
-{
+public class PController : MonoBehaviour {
     //movement
     public float moveSpeed;
     public float turnSpeed = 90;
@@ -20,7 +19,7 @@ public class PController : MonoBehaviour
     public Vector3 surfaceNormal; // current surface normal
     public Vector3 myNormal; // character normal
     private Rigidbody rb;
-    private float ignore = 1;
+    private float ignore = 0.5f;
     private static PController instance;
     public static PController Instance {
         get {
@@ -56,8 +55,6 @@ public class PController : MonoBehaviour
             ContactPoint contact = col.contacts[0];
             surfaceNormal = contact.normal; //set surface normal to collision
             StartCoroutine(JumpToWall(contact.point, contact.normal)); //jump to wall
-        } else {
-            currentFloor = col.gameObject;
         }
     }
 
@@ -75,7 +72,6 @@ public class PController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
         // move the character
         transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
-        // jump code - simple jump
         if (jumping) { return; } // abort Update while jumping to a wall
         Ray ray;
         RaycastHit hit;
@@ -86,6 +82,7 @@ public class PController : MonoBehaviour
             { // use it to update myNormal and isGrounded
                 isGrounded = hit.distance <= deltaGround;
                 surfaceNormal = hit.normal;
+                currentFloor = hit.collider.gameObject;
             } else { 
                 surfaceNormal = Vector3.up;
                 jumping = true;
@@ -104,7 +101,7 @@ public class PController : MonoBehaviour
         var dstRot = Quaternion.LookRotation(myForward, normal);
         myNormal = normal; // update myNormal
         for (float t = 0.0f; t < 1.0;) {
-            t += Time.deltaTime * 5;
+            t += Time.deltaTime * 3;
             transform.position = Vector3.Lerp(orgPos, dstPos, t);
             transform.rotation = Quaternion.Slerp(orgRot, dstRot, t);
             yield return t;  // return here next frame
