@@ -4,46 +4,30 @@ using UnityEngine;
 
 public class FallDamage : MonoBehaviour {
 
-    public float maxFallTime;
-    static float timer = 0;
-    static bool falling = false;
     public GameObject deadScreen;
-    int collisions = 0;
+    Rigidbody rb;
+    public float maxFallSpeed = -20;
+    static float lastFallSpeed;
 
-	// Update is called once per frame
-	void Update () {
-        if (falling)
-        {
-            timer += Time.deltaTime;
-        }
-	}
 
-    public static void reset()
+    private void Start() { rb = GetComponent<Rigidbody>(); }
+
+    private void FixedUpdate()
     {
-        falling = false;
-        timer = 0;
+        lastFallSpeed = rb.velocity.y;
+    }
+
+    public static void Reset()
+    {
+        lastFallSpeed = 0f;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        collisions++;
-        if( timer >= maxFallTime)
+        if(lastFallSpeed < maxFallSpeed)
         {
             Respawn.dead = true;
             deadScreen.SetActive(true);
         }
-        falling = false;
-        timer = 0;
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        collisions--;
-        if(collisions <= 0)
-        {
-            falling = true;
-            collisions = 0;
-        }
-        
     }
 }

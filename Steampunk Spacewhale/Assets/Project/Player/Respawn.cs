@@ -17,7 +17,7 @@ public class Respawn : MonoBehaviour {
         {
             dead = false;
             currentCheckpoint.GetComponent<Checkpoint>().UseCheckpoint(gameObject);
-            PController.surfaceNormal = Vector3.up;
+            PController.Instance.surfaceNormal = Vector3.up;
             deadScreen.SetActive(false);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
         }

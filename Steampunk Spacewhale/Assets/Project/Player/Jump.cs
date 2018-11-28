@@ -18,10 +18,8 @@ public class Jump : MonoBehaviour {
         } else {
             PController.Instance.isGrounded = false;
         }
-        if (Input.GetButtonDown("Jump"))
-        { // jump pressed:
-            if (PController.Instance.isGrounded)
-            { // no: if grounded, jump up
+        if (Input.GetButtonDown("Jump")) { // jump pressed:
+            if (PController.Instance.isGrounded) { // no: if grounded, jump up
                 rb.velocity += jumpSpeed * PController.Instance.myNormal;
             }
         }
