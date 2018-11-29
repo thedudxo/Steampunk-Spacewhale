@@ -14,12 +14,12 @@ public class PController : MonoBehaviour {
     public bool isGrounded;
     public bool jumping = false; // flag &quot;I'm jumping to wall&quot;
     public bool nope = true;
-    public GameObject currentFloor;
-    public GameObject previousFloor;
+    public Collider currentFloor;
+    public Collider previousFloor;
     public Vector3 surfaceNormal; // current surface normal
     public Vector3 myNormal; // character normal
     private Rigidbody rb;
-    private float ignore = 0.5f;
+    private float ignore = 1f;
     private static PController instance;
     public static PController Instance {
         get {
@@ -42,7 +42,7 @@ public class PController : MonoBehaviour {
         RaycastHit colHit;
         colRay = new Ray(transform.position, -transform.up);
         if (Physics.Raycast(colRay, out colHit)) {
-            currentFloor = colHit.collider.gameObject; //set current flooras game starts
+            currentFloor = colHit.collider; //set current flooras game starts
         }
     }
 
@@ -50,12 +50,13 @@ public class PController : MonoBehaviour {
         if (col.gameObject.GetComponent<Unclimable>() != null && !isGrounded) {
             moveSpeed = 0;
         }
-        if (col.collider.gameObject == currentFloor || col.collider.gameObject == previousFloor || col.gameObject.GetComponent<Unclimable>() != null) { return; } // ignore when colliding with current floor
+        if (col.collider == currentFloor || col.collider == previousFloor || col.gameObject.GetComponent<Unclimable>() != null) { return; } // ignore when colliding with current floor
         else if (col.gameObject != currentFloor) {
             ContactPoint contact = col.contacts[0];
             surfaceNormal = contact.normal; //set surface normal to collision
             StartCoroutine(JumpToWall(contact.point, contact.normal)); //jump to wall
         }
+        Debug.Log("Collision");
     }
 
     void FixedUpdate() {
@@ -73,16 +74,20 @@ public class PController : MonoBehaviour {
         // move the character
         transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
         if (jumping) { return; } // abort Update while jumping to a wall
+        Ray groundRay;
+        RaycastHit groundHit;
+        groundRay = new Ray (transform.position, -myNormal);
+        if(Physics.Raycast(groundRay, out groundHit)) {
+            currentFloor = groundHit.collider;
+        }
         Ray ray;
         RaycastHit hit;
         // update surface normal and isGrounded:
         ray = new Ray(transform.position, -myNormal); // cast ray downwards
         if (nope) {
-            if (Physics.Raycast(ray, out hit, jumpLimit) && hit.collider.gameObject.GetComponent<Unclimable>() == null)
-            { // use it to update myNormal and isGrounded
+            if (Physics.Raycast(ray, out hit, jumpLimit) && hit.collider.gameObject.GetComponent<Unclimable>() == null) { // use it to update myNormal and isGrounded
                 isGrounded = hit.distance <= deltaGround;
                 surfaceNormal = hit.normal;
-                currentFloor = hit.collider.gameObject;
             } else { 
                 surfaceNormal = Vector3.up;
                 jumping = true;
@@ -94,6 +99,7 @@ public class PController : MonoBehaviour {
     IEnumerator JumpToWall(Vector3 point, Vector3 normal) { // jump to wall 
         jumping = true; // signal it's jumping to wall
         rb.isKinematic = true; // disable physics while jumping
+        previousFloor = currentFloor; //set previous floor
         var orgPos = transform.position;
         var orgRot = transform.rotation;
         var dstPos = point + normal; // will jump to 1 unit above wall
@@ -107,12 +113,11 @@ public class PController : MonoBehaviour {
             yield return t;  // return here next frame
         }
         rb.isKinematic = false; // enable physics
-        previousFloor = currentFloor; //set previous floor
         Ray colRay;
         RaycastHit colHit;
         colRay = new Ray(transform.position, -transform.up);
         if (Physics.Raycast(colRay, out colHit, jumpRange)) { //shoot ray down
-            currentFloor = colHit.collider.gameObject; // ray gets current floor for player
+            currentFloor = colHit.collider; // ray gets current floor for player
         }
         jumping = false; // jumping to wall finished
         StartCoroutine(WaitIgnore()); //start ignore

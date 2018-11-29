@@ -64,7 +64,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4776397608503454}
-  - component: {fileID: 114815363422304230}
+  - component: {fileID: 114917362607399616}
   m_Layer: 0
   m_Name: GameObject (1)
   m_TagString: Untagged
@@ -80,7 +80,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4750775683102270}
-  - component: {fileID: 114919056146369720}
+  - component: {fileID: 114682903622440166}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -288,6 +288,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4327864405317800}
   turnSpeed: 5
+--- !u!114 &114682903622440166
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1793282482124382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbabc2d95327c6b4284b5aba6328e78c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114767115628390200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -299,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 0}
+  profile: {fileID: 11400000, guid: 898077079af959342924653f7108fda7, type: 2}
 --- !u!114 &114778386670840460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -322,17 +333,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf81f3e2dd20b8d499619f709796aab9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114815363422304230
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1713398667113260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbabc2d95327c6b4284b5aba6328e78c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114821347830242472
@@ -360,12 +360,12 @@ MonoBehaviour:
   previousFloor: {fileID: 0}
   surfaceNormal: {x: 0, y: 0, z: 0}
   myNormal: {x: 0, y: 0, z: 0}
---- !u!114 &114919056146369720
+--- !u!114 &114917362607399616
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1793282482124382}
+  m_GameObject: {fileID: 1713398667113260}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbabc2d95327c6b4284b5aba6328e78c, type: 3}
