@@ -23,9 +23,8 @@ GameObject:
   - component: {fileID: 23408036071808426}
   - component: {fileID: 136567613149224564}
   - component: {fileID: 54411188504737910}
-  - component: {fileID: 114345920647748604}
   - component: {fileID: 114128453321417740}
-  - component: {fileID: 114538447285451740}
+  - component: {fileID: 114533987757390682}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -43,7 +42,6 @@ GameObject:
   - component: {fileID: 4029835537443270}
   - component: {fileID: 20102596297542040}
   - component: {fileID: 124844474278597446}
-  - component: {fileID: 81017521246950264}
   - component: {fileID: 114386056266201420}
   m_Layer: 0
   m_Name: Main Camera
@@ -72,7 +70,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1176092839058682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.7, y: 1, z: -25.8}
+  m_LocalPosition: {x: 29.25, y: 1, z: -26.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4029835537443270}
@@ -172,13 +170,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!81 &81017521246950264
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1572568553418450}
-  m_Enabled: 1
 --- !u!114 &114128453321417740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -190,30 +181,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35c2f6ee42dd5684c9f5cee4328a12c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 1572568553418450}
-  player: {fileID: 1176092839058682}
-  moveSpeed: 6
-  turnSpeed: 90
-  lerpSpeed: 10
-  gravity: 10
-  isGrounded: 0
-  deltaGround: 0.2
-  jumpSpeed: 5
-  jumpRange: 3
---- !u!114 &114345920647748604
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1176092839058682}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b78b9c7dc23ce384fb7d5cb7f8d8110d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  jumpForce: 250
-  player: {fileID: 1176092839058682}
+  walkSpeed: 6
+  runSpeed: 15
+  slideSpeed: 15
+  crouchSpeed: 3
+  runTimer: 0
+  runMax: 2
+  crouching: 0
 --- !u!114 &114386056266201420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -227,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 2
   playerBody: {fileID: 4327864405317800}
---- !u!114 &114538447285451740
+--- !u!114 &114533987757390682
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -235,18 +209,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1176092839058682}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3d26ece23bd5914db6f36c5ba17dcd3, type: 3}
+  m_Script: {fileID: 11500000, guid: a003a0d035c608e46a5852508537572f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 1572568553418450}
-  player: {fileID: 1176092839058682}
-  moveSpeed: 6
-  walkSpeed: 6
-  runSpeed: 20
-  slideSpeed: 15
-  crouchSpeed: 3
-  runTimer: 0
-  runMax: 2
+  moveSpeed: 0
   turnSpeed: 90
   lerpSpeed: 10
   gravity: 10
