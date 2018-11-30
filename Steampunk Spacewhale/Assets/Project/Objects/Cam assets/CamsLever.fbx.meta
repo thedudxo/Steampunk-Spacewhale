@@ -22,12 +22,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Lever_base
-    second: {fileID: 2100000, guid: 87721bc6f96b3df49ae957e0ab0c101f, type: 2}
+    second: {fileID: 2100000, guid: 701ed8fa7a1b126418dd3db111211e06, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Lever_handle
-    second: {fileID: 2100000, guid: 986a265f0682f594d9a0afa8df3244a7, type: 2}
+    second: {fileID: 2100000, guid: d8a0cfd904160174494365310562f058, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
