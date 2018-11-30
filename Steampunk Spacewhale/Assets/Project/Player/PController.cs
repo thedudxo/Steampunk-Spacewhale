@@ -95,7 +95,7 @@ public class PController : MonoBehaviour {
             }
         }
     }
-
+    
     IEnumerator JumpToWall(Vector3 point, Vector3 normal) { // jump to wall 
         jumping = true; // signal it's jumping to wall
         rb.isKinematic = true; // disable physics while jumping
