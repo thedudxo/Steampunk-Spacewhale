@@ -1,46 +1,23 @@
 fileFormatVersion: 2
-guid: a2a17f7d0d0eac147804c2de83403517
+guid: b73adb28a2154c943b4004b153e2ee92
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: group6
-    100004: group7
-    100006: pasted__pCylinder3
-    100008: pasted__pCylinder5
-    100010: pCylinder3
-    100012: pCylinder4
-    100014: pCylinder5
-    100016: pCylinder8
-    100018: transform29
-    100020: transform30
-    100022: transform31
-    100024: transform6
-    100026: transform7
-    400000: //RootNode
-    400002: group6
-    400004: group7
-    400006: pasted__pCylinder3
-    400008: pasted__pCylinder5
-    400010: pCylinder3
-    400012: pCylinder4
-    400014: pCylinder5
-    400016: pCylinder8
-    400018: transform29
-    400020: transform30
-    400022: transform31
-    400024: transform6
-    400026: transform7
-    2100000: Boiler
-    2300000: pCylinder8
-    3300000: pCylinder8
-    4300000: pCylinder8
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Boiler
-    second: {fileID: 2100000, guid: c5513b563129d34429768108459a49fa, type: 2}
+    100000: pCube1
+    100002: polySurface27
+    100004: //RootNode
+    400000: pCube1
+    400002: polySurface27
+    400004: //RootNode
+    2100000: lambert1
+    2300000: pCube1
+    2300002: polySurface27
+    3300000: pCube1
+    3300002: polySurface27
+    4300000: pCube1
+    4300002: polySurface27
+    2186277476908879412: ImportLogs
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -71,7 +48,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 200
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
