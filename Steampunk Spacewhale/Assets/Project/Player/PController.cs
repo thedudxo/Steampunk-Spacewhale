@@ -19,6 +19,7 @@ public class PController : MonoBehaviour {
     public Vector3 surfaceNormal; // current surface normal
     public Vector3 myNormal; // character normal
     private Rigidbody rb;
+    private AudioSource audio;
     private float ignore = 1f;
     private static PController instance;
     public static PController Instance {
@@ -34,10 +35,10 @@ public class PController : MonoBehaviour {
     }
 
     void Start() {
-        myNormal = transform.up; // normal starts as character up direction 
+        myNormal = transform.up; // normal starts as character up direction
+        audio = GetComponent<AudioSource>();
         gameObject.GetComponent<Rigidbody>().freezeRotation = true; // disable physics rotation
-        // distance from transform.position to ground
-        //distGround = GetComponent<Collider>().bounds.extents.y - GetComponent<Collider>().bounds.center.y;
+        InvokeRepeating("Footsteps", 0, 0.7f);
         Ray colRay;
         RaycastHit colHit;
         colRay = new Ray(transform.position, -transform.up);
@@ -122,6 +123,19 @@ public class PController : MonoBehaviour {
         jumping = false; // jumping to wall finished
         StartCoroutine(WaitIgnore()); //start ignore
         CheckGround.Instance.GroundChecker();//Start void in CheckGround Script
+    }
+
+    void Footsteps() {
+        audio.mute = true;
+        audio.volume = Random.Range(0.8f, 1);
+        audio.pitch = Random.Range(0.8f, 1.1f);
+        audio.Play();
+        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) {
+            audio.mute = false;
+            Debug.Log("Stop");
+        } else if (jumping && !isGrounded) {
+            audio.mute = true;
+        }
     }
 
     IEnumerator WaitIgnore() {
