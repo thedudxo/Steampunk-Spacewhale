@@ -11,6 +11,7 @@ public class Interact : MonoBehaviour {
     public GameObject[] interactables;
     RaycastHit hit;
     Ray ray;
+    public Animator animator;
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +32,9 @@ public class Interact : MonoBehaviour {
                 {
                     if (interactee.tag == "lever1") //rotate the thinggy
                     {
+                        animator.SetTrigger("Lever");
                         RotatingPlatform.Rotate();
+                        
                     }
                 }
             }
