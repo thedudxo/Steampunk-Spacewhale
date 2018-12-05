@@ -1,28 +1,30 @@
 fileFormatVersion: 2
-guid: ce49d8c42b1fcec4e9f9dfe54f564a3a
+guid: 535cdc184c779ae489613bc737968bd0
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     100002: pCube4
-    100004: pCylinder2
+    100004: pCylinder9
     400000: //RootNode
     400002: pCube4
-    400004: pCylinder2
-    2100000: Lever_handle
-    2100002: Lever_base
+    400004: pCylinder9
+    2100000: Lever_base
+    2100002: Lever_handle
     2300000: pCube4
-    2300002: pCylinder2
+    2300002: pCylinder9
     3300000: pCube4
-    3300002: pCylinder2
-    4300000: pCylinder2
-    4300002: pCube4
+    3300002: pCylinder9
+    4300000: pCube4
+    4300002: pCylinder9
+    7400000: Take 001
+    9500000: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Lever_base
-    second: {fileID: 2100000, guid: 87721bc6f96b3df49ae957e0ab0c101f, type: 2}
+    second: {fileID: 2100000, guid: 84e91a735e3c96e498214db4da3c8d98, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -102,7 +104,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
