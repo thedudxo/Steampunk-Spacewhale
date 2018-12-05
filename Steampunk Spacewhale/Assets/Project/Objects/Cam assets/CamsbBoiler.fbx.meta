@@ -40,7 +40,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Boiler
-    second: {fileID: 2100000, guid: c5513b563129d34429768108459a49fa, type: 2}
+    second: {fileID: 2100000, guid: 283d53c33e0a3044fb4ad9b06279af1a, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

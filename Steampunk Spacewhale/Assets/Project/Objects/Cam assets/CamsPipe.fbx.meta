@@ -16,7 +16,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: pasted__Pipe
-    second: {fileID: 2100000, guid: daa2656e166583546bf2c26e3446439f, type: 2}
+    second: {fileID: 2100000, guid: 7099cffa5beab3c45a0df31b4f18f3cb, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
