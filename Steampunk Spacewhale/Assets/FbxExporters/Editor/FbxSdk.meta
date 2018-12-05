@@ -1,3 +1,4 @@
+<<<<<<< HEAD:Steampunk Spacewhale/Assets/FbxExporters/Editor/FbxSdk.meta
 fileFormatVersion: 2
 guid: ccdb8f785f944094d99c643954f4c176
 folderAsset: yes
@@ -7,3 +8,13 @@ DefaultImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+=======
+fileFormatVersion: 2
+guid: 51c25010ae6570f46bbe1b0e313ab469
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> Cameron:Steampunk Spacewhale/Assets/Test/Objects/Cam assets.meta
