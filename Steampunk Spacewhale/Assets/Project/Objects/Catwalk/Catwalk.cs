@@ -22,7 +22,7 @@ public class Catwalk : MonoBehaviour, IResetable  {
         currentFallingSpeed = fallingSpeed;
     }
 
-    void Update () {
+    void FixedUpdate () {
         if (falling)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y - currentFallingSpeed, transform.position.z);

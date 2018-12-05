@@ -6,6 +6,7 @@ public class RotatingPlatform : MonoBehaviour {
 
     public static float rotateSpeed = 0.5f;
     private static bool rotating = false;
+    private static bool rotated = false;
 
 	// Use this for initialization
 	void Start () {
@@ -20,12 +21,14 @@ public class RotatingPlatform : MonoBehaviour {
             if(transform.rotation.x > 0)
             {
                 rotating = false;
+                rotated = true;
             }
         }
 	}
 
     public static void Rotate()
     {
+        if (rotated) { return; }
         rotating = true;
     }
 }
