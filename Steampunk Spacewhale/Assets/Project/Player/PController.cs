@@ -19,7 +19,6 @@ public class PController : MonoBehaviour {
     public Vector3 surfaceNormal; // current surface normal
     public Vector3 myNormal; // character normal
     private Rigidbody rb;
-    private AudioSource audio;
     private float ignore = 1f;
     private static PController instance;
     public static PController Instance {
@@ -36,9 +35,7 @@ public class PController : MonoBehaviour {
 
     void Start() {
         myNormal = transform.up; // normal starts as character up direction
-        audio = GetComponent<AudioSource>();
         gameObject.GetComponent<Rigidbody>().freezeRotation = true; // disable physics rotation
-        InvokeRepeating("Footsteps", 0, 0.7f);
         Ray colRay;
         RaycastHit colHit;
         colRay = new Ray(transform.position, -transform.up);
@@ -57,7 +54,6 @@ public class PController : MonoBehaviour {
             surfaceNormal = contact.normal; //set surface normal to collision
             StartCoroutine(JumpToWall(contact.point, contact.normal)); //jump to wall
         }
-        Debug.Log("Collision");
     }
 
     void FixedUpdate() {
@@ -124,7 +120,7 @@ public class PController : MonoBehaviour {
         StartCoroutine(WaitIgnore()); //start ignore
         CheckGround.Instance.GroundChecker();//Start void in CheckGround Script
     }
-
+    /*
     void Footsteps() {
         audio.mute = true;
         audio.volume = Random.Range(0.8f, 1);
@@ -136,7 +132,7 @@ public class PController : MonoBehaviour {
         } else if (jumping && !isGrounded) {
             audio.mute = true;
         }
-    }
+    }*/
 
     IEnumerator WaitIgnore() {
         yield return new WaitForSeconds(ignore);

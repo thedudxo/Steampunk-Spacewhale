@@ -4,12 +4,38 @@ using UnityEngine;
 
 public class Footsteps : MonoBehaviour {
 
-	void Update () {
-		if (PController.Instance.isGrounded && Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 && GetComponent<AudioSource>().isPlaying == false && !PController.Instance.jumping && PController.Instance.isGrounded) {
-            GetComponent<AudioSource>().volume = Random.Range(0.8f, 1);
-            GetComponent<AudioSource>().pitch = Random.Range(0.8f, 1.1f);
-            GetComponent<AudioSource>().Play();
+    private AudioSource audio;
+    public bool ground = true;
+    private Animator anim;
+
+    private void Start() {
+        audio = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
+    }
+
+    private void Update() {
+        Ray ray;
+        RaycastHit hit;
+        ray = new Ray(transform.position, -PController.Instance.myNormal);
+        if (Physics.Raycast(ray, out hit, 1.2f)) {
+            Debug.Log("hit");
+            ground = true;
+        } else {
+            ground = false;
         }
-        //Debug.Log(Input.GetAxis("Horizontal"));
+        if (Input.GetAxis("Vertical") != 0 && ground || Input.GetAxis("Horizontal") != 0 && ground) {
+            anim.SetBool("Walk/Jump", true);
+        } else {
+            anim.SetBool("Walk/Jump", false);
+        }
+        if (!ground || PController.Instance.jumping) {
+            anim.SetBool("Walk/Jump", false);
+        }
+    }
+
+    void FootstepAudio() {
+        audio.volume = Random.Range(0.8f, 1);
+        audio.pitch = Random.Range(0.8f, 1.1f);
+        audio.Play();
 	}
 }
