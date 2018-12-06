@@ -9,6 +9,7 @@ public class Jump : MonoBehaviour {
     private Rigidbody rb;
 
 	void Update () {
+        if (Respawn.dead) { return; }
         rb = GetComponent<Rigidbody>();
         Ray jumpRay;
         RaycastHit jumpHit;
