@@ -1,0 +1,19 @@
+<<<<<<< HEAD:Steampunk Spacewhale/Assets/FbxExporters/Editor/FbxSdk/LICENSE.txt.meta
+fileFormatVersion: 2
+guid: 070080e279910ff42ad2e323bcb2a737
+timeCreated: 1507217626
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+=======
+fileFormatVersion: 2
+guid: 0e3e3ea4800f5a7468a9b904fa175e9e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> Cameron:Steampunk Spacewhale/Assets/Test/Objects/Cam assets/boiler.mat.meta

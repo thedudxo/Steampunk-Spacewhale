@@ -12,7 +12,7 @@ public class CamRotations : MonoBehaviour {
 		
 	}
 	
-	void Update () {
+	void FixedUpdate () {
         if (!Respawn.dead) {
             RotateCamera();
         }

@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class Respawn : MonoBehaviour {
 
+
+    public GameObject startCheckpoint;
     public static GameObject currentCheckpoint;
     public static bool dead = false;
     public GameObject deadText;
     public GameObject deadScreen;
     public static KeyCode respawnKey = KeyCode.R;
+
+    private void Start()
+    {
+        currentCheckpoint = startCheckpoint;
+        startCheckpoint.GetComponent<Checkpoint>().activatable = false;
+    }
 
     // Update is called once per frame
     void Update () {
