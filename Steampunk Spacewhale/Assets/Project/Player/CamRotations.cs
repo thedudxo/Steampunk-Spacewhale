@@ -5,7 +5,7 @@ using UnityEngine;
 public class CamRotations : MonoBehaviour {
 
     public Transform player;
-    public float turnSpeed = 5;
+    public float turnSpeed = 90;
     float xAxisClamp = 0;
 
 	void Start () {
