@@ -12,7 +12,7 @@ public class PController : MonoBehaviour {
     public float jumpRange = 2f; // range to detect target wall
     public float jumpLimit = 5f;
     public bool isGrounded;
-    public bool jumping = false; // flag &quot;I'm jumping to wall&quot;
+    public bool jumping = false; // flag "I'm jumping to wall"
     public bool nope = true;
     public Collider currentFloor;
     public Collider previousFloor;
@@ -57,6 +57,7 @@ public class PController : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        Debug.DrawRay(transform.position, -myNormal * jumpLimit, Color.blue);
         if (Respawn.dead) { return; }
         // apply constant weight force according to character normal:
         rb = GetComponent<Rigidbody>();
@@ -74,18 +75,22 @@ public class PController : MonoBehaviour {
         Ray groundRay;
         RaycastHit groundHit;
         groundRay = new Ray (transform.position, -myNormal);
-        if(Physics.Raycast(groundRay, out groundHit)) {
+        if(Physics.Raycast(groundRay, out groundHit, jumpLimit)) {
             currentFloor = groundHit.collider;
         }
         Ray ray;
         RaycastHit hit;
         // update surface normal and isGrounded:
         ray = new Ray(transform.position, -myNormal); // cast ray downwards
-        if (nope) {
-            if (Physics.Raycast(ray, out hit, jumpLimit) && hit.collider.gameObject.GetComponent<Unclimable>() == null) { // use it to update myNormal and isGrounded
+        if (nope)
+        {
+            if (Physics.Raycast(ray, out hit, jumpLimit) && hit.collider.gameObject.GetComponent<Unclimable>() == null)
+            { // use it to update myNormal and isGrounded
                 isGrounded = hit.distance <= deltaGround;
                 surfaceNormal = hit.normal;
-            } else { 
+            }
+            else
+            {
                 surfaceNormal = Vector3.up;
                 jumping = true;
                 StartCoroutine(Stop());

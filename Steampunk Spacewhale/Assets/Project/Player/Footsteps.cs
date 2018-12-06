@@ -17,7 +17,7 @@ public class Footsteps : MonoBehaviour {
         Ray ray;
         RaycastHit hit;
         ray = new Ray(transform.position, -PController.Instance.myNormal);
-        if (Physics.Raycast(ray, out hit, 1.2f)) {
+        if (Physics.Raycast(ray, out hit, 1.3f)) {
             Debug.Log("hit");
             ground = true;
         } else {
@@ -28,7 +28,7 @@ public class Footsteps : MonoBehaviour {
         } else {
             anim.SetBool("Walk/Jump", false);
         }
-        if (!ground || PController.Instance.jumping) {
+        if (!ground) {
             anim.SetBool("Walk/Jump", false);
         }
     }

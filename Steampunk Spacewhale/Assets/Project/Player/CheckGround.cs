@@ -28,6 +28,10 @@ public class CheckGround : MonoBehaviour {
             PController.Instance.nope = false;
             PController.Instance.surfaceNormal = Vector3.up;
         }
+        
+    }
+
+    private void Update() {
         Debug.DrawRay(transform.position, -PController.Instance.myNormal * PController.Instance.jumpLimit, Color.red);
     }
 }
