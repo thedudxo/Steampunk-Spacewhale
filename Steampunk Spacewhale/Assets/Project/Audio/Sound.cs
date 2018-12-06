@@ -9,14 +9,17 @@ public class Sound
 
     public AudioClip clip;
 
+    public AudioMixerGroup output;
+
+    public bool mute;
+    public bool bypassEffects;
+    public bool loop;
     [Range(0f, 1f)]
     public float volume;
     [Range(.1f, 3f)]
     public float pitch;
-    public bool loop;
-    public bool mute;
-
-    public AudioMixerGroup output;
+    [Range(0, 1)]
+    public float spatialBlend;
 
     [HideInInspector]
     public AudioSource source;
