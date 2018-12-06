@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotatingPlatform : MonoBehaviour {
 
-    public static float rotateSpeed = 0.5f;
+    public static float rotateSpeed = 0.3f;
     private static bool rotating = false;
     private static bool rotated = false;
 
@@ -17,28 +17,21 @@ public class RotatingPlatform : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (rotating)
-        {
+	void FixedUpdate () {
+        if (rotating) {
             transform.Rotate(rotateSpeed, 0, 0);
-            if(transform.rotation.x > 0)
-            {
+            if(transform.rotation.x > 0) {
+                rotate.Stop();
+                stopRotate.Play();
                 rotating = false;
+                rotated = true;
             }
         }
 	}
 
-    public static void Rotate()
-    {
-        rotating = true;
-    }
-}
-
-	void FixedUpdate () {
-        if (rotating)
-        {
-                rotated = true;
-    public static void Rotate()
-    {
+    public static void Rotate() {
         if (rotated) { return; }
         rotating = true;
+        rotate.Play();
+    }
+}
