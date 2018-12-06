@@ -52,7 +52,7 @@ LightmapSettings:
     m_AlbedoBoost: 1
     m_TemporalCoherenceThreshold: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 0
+    m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 10
@@ -1629,7 +1629,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 2.82
   m_ColorTemperature: 6570
@@ -3252,7 +3252,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 2.82
   m_ColorTemperature: 6570
@@ -5530,7 +5530,7 @@ Prefab:
     - target: {fileID: 108916821434614620, guid: 2975e4f2c4a210c45a6abbbdfcb82a62,
         type: 2}
       propertyPath: m_Lightmapping
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1332144126926652, guid: 2975e4f2c4a210c45a6abbbdfcb82a62, type: 2}
       propertyPath: m_IsActive
@@ -5597,7 +5597,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 2.82
   m_ColorTemperature: 6570
@@ -5982,7 +5982,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 4.38
   m_ColorTemperature: 6570
@@ -6073,6 +6073,21 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20102596297542040, guid: 7e12fdb51f2c003449271015270f729b,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114386056266201420, guid: 7e12fdb51f2c003449271015270f729b,
+        type: 2}
+      propertyPath: turnSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821347830242472, guid: 7e12fdb51f2c003449271015270f729b,
+        type: 2}
+      propertyPath: turnSpeed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114919056146369720, guid: 7e12fdb51f2c003449271015270f729b, type: 2}
@@ -6226,7 +6241,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 4.38
   m_ColorTemperature: 6570
@@ -7796,7 +7811,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 774263973}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 0.9433962, g: 0.77868706, b: 0.45834818, a: 1}
@@ -7819,7 +7834,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 2.82
   m_ColorTemperature: 6570
@@ -9324,7 +9339,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 2.82
   m_ColorTemperature: 6570
@@ -9761,7 +9776,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 4.38
   m_ColorTemperature: 6570
@@ -11340,7 +11355,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 2.82
   m_ColorTemperature: 6570
@@ -14654,7 +14669,7 @@ Prefab:
     - target: {fileID: 108916821434614620, guid: 2975e4f2c4a210c45a6abbbdfcb82a62,
         type: 2}
       propertyPath: m_Lightmapping
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2975e4f2c4a210c45a6abbbdfcb82a62, type: 2}
@@ -14763,12 +14778,12 @@ Prefab:
     - target: {fileID: 108829443082570846, guid: 7a1aacce3a0f1c04fbfd09a85a8dff15,
         type: 2}
       propertyPath: m_Lightmapping
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 108703096699633852, guid: 7a1aacce3a0f1c04fbfd09a85a8dff15,
         type: 2}
       propertyPath: m_Lightmapping
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a1aacce3a0f1c04fbfd09a85a8dff15, type: 2}
@@ -16460,12 +16475,12 @@ Prefab:
     - target: {fileID: 108829443082570846, guid: 7a1aacce3a0f1c04fbfd09a85a8dff15,
         type: 2}
       propertyPath: m_Lightmapping
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 108703096699633852, guid: 7a1aacce3a0f1c04fbfd09a85a8dff15,
         type: 2}
       propertyPath: m_Lightmapping
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a1aacce3a0f1c04fbfd09a85a8dff15, type: 2}
@@ -17361,7 +17376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9b2189f7b3b664fafb37b38ac83297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallingSpeed: 0.01
+  fallingSpeed: 0.005
   acceleration: 0.0001
 --- !u!65 &1980511533
 BoxCollider:
@@ -17789,7 +17804,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
@@ -18494,7 +18509,7 @@ Prefab:
     - target: {fileID: 108916821434614620, guid: 2975e4f2c4a210c45a6abbbdfcb82a62,
         type: 2}
       propertyPath: m_Lightmapping
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2975e4f2c4a210c45a6abbbdfcb82a62, type: 2}
@@ -18859,12 +18874,12 @@ Prefab:
     - target: {fileID: 108829443082570846, guid: 7a1aacce3a0f1c04fbfd09a85a8dff15,
         type: 2}
       propertyPath: m_Lightmapping
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 108703096699633852, guid: 7a1aacce3a0f1c04fbfd09a85a8dff15,
         type: 2}
       propertyPath: m_Lightmapping
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a1aacce3a0f1c04fbfd09a85a8dff15, type: 2}
@@ -19038,7 +19053,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 4.38
   m_ColorTemperature: 6570
@@ -19203,7 +19218,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 2.82
   m_ColorTemperature: 6570

@@ -14,7 +14,7 @@ public class RotatingPlatform : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         if (rotating)
         {
             transform.Rotate(rotateSpeed, 0, 0);
