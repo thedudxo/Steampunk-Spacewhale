@@ -13,6 +13,8 @@ public class Catwalk : MonoBehaviour, IResetable  {
     private Quaternion startRot;
     private Vector3 startScale;
 
+    public AudioSource fall;
+
     // Use this for initialization
     void Start()
     {
@@ -28,24 +30,29 @@ public class Catwalk : MonoBehaviour, IResetable  {
             transform.position = new Vector3(transform.position.x, transform.position.y - currentFallingSpeed, transform.position.z);
             currentFallingSpeed += acceleration;
         }
+        if(transform.localPosition.y <= -6.4f) {
+            falling = false;
+            fall.Stop();
+        }
 	}
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
+    private void OnCollisionEnter(Collision collision) {
+        if(collision.gameObject.tag == "Player") {
             Debug.Log("collision");
             falling = true;
+            if (!fall.isPlaying){
+                fall.Play();
+            }
         }
     }
 
-    public void Reset()
-    {
+    public void Reset() {
         Debug.Log("Reset");
         transform.position = startPos;
         transform.rotation = startRot;
         transform.localScale = startScale;
         falling = false;
         currentFallingSpeed = fallingSpeed;
+        fall.Stop();
     }
 }
