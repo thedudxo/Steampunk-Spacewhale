@@ -34,7 +34,7 @@ public class Footsteps : MonoBehaviour {
     }
 
     void FootstepAudio() {
-        audio.volume = Random.Range(0.8f, 1);
+        audio.volume = Random.Range(0.4f, 0.7f);
         audio.pitch = Random.Range(0.8f, 1.1f);
         audio.Play();
 	}
