@@ -62,7 +62,6 @@ public class PController : MonoBehaviour {
         // apply constant weight force according to character normal:
         rb = GetComponent<Rigidbody>();
         rb.AddForce(-gravity * rb.mass * myNormal);
-        transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed * 2.5f, 0);
         myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed * Time.deltaTime);
         // find forward direction with new myNormal:
         var myForward = Vector3.Cross(transform.right, myNormal);

@@ -34,5 +34,6 @@ public class CamRotations : MonoBehaviour {
             targetRotCam.x = 270;
         }
         transform.localRotation = Quaternion.Euler(targetRotCam);
+        player.transform.Rotate(0, Input.GetAxis("Mouse X") * turnSpeed, 0);
     }
 }
