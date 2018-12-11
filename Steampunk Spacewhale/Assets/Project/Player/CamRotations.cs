@@ -9,7 +9,7 @@ public class CamRotations : MonoBehaviour {
     float xAxisClamp = 0;
 
 	void Start () {
-		
+        Application.targetFrameRate = 60;
 	}
 	
 	void FixedUpdate () {
