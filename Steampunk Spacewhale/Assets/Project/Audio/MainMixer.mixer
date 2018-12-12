@@ -14,11 +14,14 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 0a5c059d127cc724ea8ce7f27c4dc114
+    name: FootstepAudio
   m_AudioMixerGroupViews:
   - guids:
     - bc7a4bb8e02df054aada84ff42efef6e
     - 5314adea9c8fa5246a8e9b09c1b99219
+    - cc058934f67287f4fb38573907d8f9fe
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -32,6 +35,7 @@ AudioMixerGroupController:
   m_GroupID: bc7a4bb8e02df054aada84ff42efef6e
   m_Children:
   - {fileID: 243787063719772232}
+  - {fileID: 243056033365536346}
   m_Volume: be5a0171793627f4996b734bc2bac1b8
   m_Pitch: 6559e6359dc18f44eb3c04041b0c74a5
   m_Effects:
@@ -76,10 +80,28 @@ AudioMixerSnapshotController:
     4e442ceb757aa9c4d9179d27023356b3: -1200
     fbcf669c32a5e4e419b9234c9468d581: 6.8
     8c6db3fc5314e494ba821c753bd88ab8: 10
+    0a5c059d127cc724ea8ce7f27c4dc114: 0
     3322b14ee5854254c949da900b163303: 2.1499999
     b3c38c5e6e1bb0e4f8064756d7dded47: 1
     ed75816ea10e4a54d957bad451d99d41: -10
   m_TransitionOverrides: {}
+--- !u!243 &243056033365536346
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Footsteps
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: cc058934f67287f4fb38573907d8f9fe
+  m_Children: []
+  m_Volume: 0a5c059d127cc724ea8ce7f27c4dc114
+  m_Pitch: 863ddbba9648fef46b989436485de19a
+  m_Effects:
+  - {fileID: 244133874325566908}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &243787063719772232
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -137,6 +159,19 @@ AudioMixerEffectController:
     m_GUID: 769235668ca295b4d89392cbc529510f
   - m_ParameterName: LF Reference
     m_GUID: 87302e2872867884c914b7e868a26299
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &244133874325566908
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_EffectID: d2c9a05950108644c8c740e78c46d4b5
+  m_EffectName: Attenuation
+  m_MixLevel: 46157d21b184cfc45a4710123cd2aae6
+  m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0

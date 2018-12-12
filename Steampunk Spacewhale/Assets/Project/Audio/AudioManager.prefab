@@ -9,17 +9,18 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1458280430858920}
+  m_RootGameObject: {fileID: 1961877530674118}
   m_IsPrefabParent: 1
---- !u!1 &1458280430858920
+--- !u!1 &1961877530674118
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4040090414313024}
-  - component: {fileID: 114479864028066164}
+  - component: {fileID: 4450048823542588}
+  - component: {fileID: 114637915709053446}
+  - component: {fileID: 114990103775650832}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -27,28 +28,123 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4040090414313024
+--- !u!4 &4450048823542588
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1458280430858920}
-  m_LocalRotation: {x: -0, y: -0.10786666, z: -0, w: 0.9941654}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 56.637405, y: 45.692173, z: 6.8410616}
+  m_GameObject: {fileID: 1961877530674118}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -103.8, y: 84.5, z: 517.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114479864028066164
+--- !u!114 &114637915709053446
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1458280430858920}
+  m_GameObject: {fileID: 1961877530674118}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 678d105a91ec9e04ca6848111b1d69c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: Bang_0
+    clip: {fileID: 8300000, guid: c5e8c85db8cb2ef41b003a899b725f65, type: 3}
+    output: {fileID: 243787063719772232, guid: fdcb5278f6b297c478f356ccc2f92dc5, type: 2}
+    mute: 0
+    bypassEffects: 0
+    loop: 0
+    volume: 0.8
+    pitch: 1
+    spatialBlend: 0.9
+    source: {fileID: 0}
+  - name: Bang_1
+    clip: {fileID: 8300000, guid: e27190921f7d3f143bea1e97faf148c9, type: 3}
+    output: {fileID: 243787063719772232, guid: fdcb5278f6b297c478f356ccc2f92dc5, type: 2}
+    mute: 0
+    bypassEffects: 0
+    loop: 0
+    volume: 0.8
+    pitch: 1
+    spatialBlend: 0.9
+    source: {fileID: 0}
+  - name: Bang_2
+    clip: {fileID: 8300000, guid: a387560e76a41c44a935bc947c14540a, type: 3}
+    output: {fileID: 243787063719772232, guid: fdcb5278f6b297c478f356ccc2f92dc5, type: 2}
+    mute: 0
+    bypassEffects: 0
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.9
+    source: {fileID: 0}
+  - name: Bang_3
+    clip: {fileID: 8300000, guid: 477516e83a32d5344beac28f0c56e07d, type: 3}
+    output: {fileID: 243787063719772232, guid: fdcb5278f6b297c478f356ccc2f92dc5, type: 2}
+    mute: 0
+    bypassEffects: 0
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.9
+    source: {fileID: 0}
+  - name: Bang_4
+    clip: {fileID: 8300000, guid: c69976b46248211409018d91e85dc053, type: 3}
+    output: {fileID: 243787063719772232, guid: fdcb5278f6b297c478f356ccc2f92dc5, type: 2}
+    mute: 0
+    bypassEffects: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.9
+    source: {fileID: 0}
+  - name: Bang_5
+    clip: {fileID: 8300000, guid: c421bb90eb1abba47afd29203ebb1ff9, type: 3}
+    output: {fileID: 243787063719772232, guid: fdcb5278f6b297c478f356ccc2f92dc5, type: 2}
+    mute: 0
+    bypassEffects: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.9
+    source: {fileID: 0}
+  - name: Bang_6
+    clip: {fileID: 8300000, guid: d88a21e8fd5edc24788d43b8696cfb10, type: 3}
+    output: {fileID: 243787063719772232, guid: fdcb5278f6b297c478f356ccc2f92dc5, type: 2}
+    mute: 0
+    bypassEffects: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.9
+    source: {fileID: 0}
+  - name: Bang_7
+    clip: {fileID: 8300000, guid: 3b77d6b7720691f4d9fdb3a6422716d5, type: 3}
+    output: {fileID: 243787063719772232, guid: fdcb5278f6b297c478f356ccc2f92dc5, type: 2}
+    mute: 0
+    bypassEffects: 0
+    loop: 0
+    volume: 0.8
+    pitch: 0.5
+    spatialBlend: 0.9
+    source: {fileID: 0}
+--- !u!114 &114990103775650832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1961877530674118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96729d46acd00214887a1fbb7f1fc863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minWait: 5
+  maxWait: 15
+  waitTime: 0
+  soundChoice: 0

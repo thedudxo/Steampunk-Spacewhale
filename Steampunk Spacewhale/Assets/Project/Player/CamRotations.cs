@@ -5,10 +5,19 @@ using UnityEngine;
 public class CamRotations : MonoBehaviour {
 
     public Transform player;
-    public float turnSpeed = 90;
+    public float turnSpeed;
     float xAxisClamp = 0;
+    private static CamRotations instance;
+    public static CamRotations Instance {
+        get {
+            if (instance == null) {
+                instance = GameObject.FindObjectOfType<CamRotations>();
+            }
+            return CamRotations.instance;
+        }
+    }
 
-	void Start () {
+    void Start () {
         Application.targetFrameRate = 60;
 	}
 	

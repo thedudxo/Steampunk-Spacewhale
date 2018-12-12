@@ -5,7 +5,6 @@ using UnityEngine;
 public class PController : MonoBehaviour {
     //movement
     public float moveSpeed;
-    public float turnSpeed = 90;
     public float lerpSpeed = 10; // smoothing speed
     public float gravity = 10;// gravity acceleration
     public float deltaGround = 0.2f; // character is grounded up to this distance
